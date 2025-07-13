@@ -1,14 +1,15 @@
+import "./app.css";
+
 import {
 	isRouteErrorResponse,
 	Links,
 	Meta,
 	Outlet,
 	Scripts,
-	ScrollRestoration,
+	ScrollRestoration
 } from "react-router";
-
-import type { Route } from "./+types/root";
-import "./app.css";
+import type { Route } from './+types/root';
+import { getAuth } from './lib/auth/auth.server';
 
 export const links: Route.LinksFunction = () => [
 	{ rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -22,6 +23,19 @@ export const links: Route.LinksFunction = () => [
 		href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
 	},
 ];
+
+export async function loader({
+	context,
+	request,
+}: Route.LoaderArgs) {
+	const auth = getAuth(context);
+	const session = await auth.api.getSession({ headers: request.headers });
+
+	return {
+		baseURL: context.cloudflare.env.BETTER_AUTH_URL,
+		user: session?.user,
+	};
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	return (
