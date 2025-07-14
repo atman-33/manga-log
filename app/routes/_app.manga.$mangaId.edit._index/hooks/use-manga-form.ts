@@ -1,15 +1,15 @@
+import { useForm } from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
 import { z } from "zod";
 
-export const MangaLogSchema = z.object({
+const mangaLogSchema = z.object({
   id: z.number().int().optional(), // Add optional id field
   title: z.string().min(1, "Title is required"),
   score: z.preprocess(
     (a) => parseFloat(z.string().parse(a)),
     z.number().min(1).max(5).optional(),
   ),
-  status: z
-    .enum(["Reading", "Completed", "On-Hold", "Dropped", "Plan to Read"])
-    .optional(),
+  is_completed: z.preprocess((a) => a === "true" || a === true, z.boolean()),
   volume_progress: z.preprocess(
     (a) => parseInt(z.string().parse(a), 10),
     z.number().int().min(0).optional(),
@@ -20,3 +20,15 @@ export const MangaLogSchema = z.object({
   ),
   note: z.string().optional(),
 });
+
+const useMangaForm = () => {
+  const form = useForm({
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema: mangaLogSchema });
+    },
+  });
+
+  return form;
+};
+
+export { mangaLogSchema, useMangaForm };

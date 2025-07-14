@@ -5,7 +5,9 @@ const mangaLogs = sqliteTable("manga_logs", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   title: text("title").notNull(),
   score: integer("score"),
-  status: text("status"),
+  is_completed: integer("is_completed", { mode: "boolean" })
+    .notNull()
+    .default(false),
   volume_progress: integer("volume_progress"),
   chapter_progress: integer("chapter_progress"),
   note: text("note"),
