@@ -54,6 +54,7 @@ export function MangaForm({ defaultValues, isSubmitting }: MangaFormProps) {
           Status
         </Label>
         <div className="flex items-center space-x-2">
+          {/* TODO: need to link conform */}
           <Switch
             id="is_completed"
             checked={is_completed.value === true}

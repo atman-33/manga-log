@@ -1,5 +1,6 @@
 import { parseWithZod } from '@conform-to/zod';
 import { eq } from 'drizzle-orm';
+import { randomUUID } from 'node:crypto';
 import { Form, useNavigation } from "react-router"; // Keep Form and useNavigation from react-router-dom
 import { z } from "zod";
 import { mangaLogs } from '~/database/schema';
@@ -9,13 +10,8 @@ import { MangaForm } from "./components/manga-form";
 import { mangaLogSchema } from './hooks/use-manga-form';
 
 export async function loader({ context, params }: Route.LoaderArgs) {
-  const id = params.mangaId ? parseInt(params.mangaId, 10) : undefined;
-
-  if (!id || isNaN(id)) {
-    throw new Response("Bad Request: mangaId is required and must be a number", { status: 400 });
-  }
   const manga = await context.db.query.mangaLogs.findFirst({
-    where: (mangaLogs, { eq }) => eq(mangaLogs.id, id),
+    where: (mangaLogs, { eq }) => eq(mangaLogs.id, params.mangaId),
     columns: {
       id: true,
       title: true,
@@ -81,6 +77,7 @@ export async function action({ request, context }: Route.ActionArgs) {
         .insert(mangaLogs)
         .values({
           ...rest,
+          id: randomUUID(),
           user_id: session.user.id,
         })
         .returning();

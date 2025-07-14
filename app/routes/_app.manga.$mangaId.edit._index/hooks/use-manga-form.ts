@@ -3,7 +3,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { z } from "zod";
 
 const mangaLogSchema = z.object({
-  id: z.number().int().optional(), // Add optional id field
+  id: z.string().uuid().optional(), // Add optional id field
   title: z.string().min(1, "Title is required"),
   score: z.preprocess(
     (a) => parseFloat(z.string().parse(a)),

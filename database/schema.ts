@@ -2,7 +2,7 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { account, session, user, verification } from "./auth-schema";
 
 const mangaLogs = sqliteTable("manga_logs", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+  id: text("id").primaryKey().notNull(),
   title: text("title").notNull(),
   score: integer("score"),
   is_completed: integer("is_completed", { mode: "boolean" })
