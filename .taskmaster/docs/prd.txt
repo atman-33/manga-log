@@ -16,7 +16,7 @@
 - Each manga log must contain the following information:
     - **Title:** The title of the manga (text, required).
     - **Score:** A user-assigned score from 1.0 to 5.0 (numeric, optional).
-    - **Status:** A flag indicating if the manga series is completed or still ongoing (boolean).
+    - **Is Completed:** A flag indicating if the manga series is completed or still ongoing (boolean).
     - **Progress (Volume):** The last volume number the user has read (integer, optional).
     - **Progress (Chapter):** The last chapter number the user has read (integer, optional).
     - **Note:** A free-form text area for personal notes (text, optional).
