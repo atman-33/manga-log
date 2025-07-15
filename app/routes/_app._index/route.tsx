@@ -1,5 +1,17 @@
+import { Trash2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Form, Link } from 'react-router';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '~/components/ui/alert-dialog';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import {
@@ -89,15 +101,51 @@ const App = ({ loaderData }: Route.ComponentProps) => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredMangaLogs.map((log) => (
-            <Link
+            <div
               key={log.id}
-              to={`/manga/${log.id}/edit`}
-              className="block border rounded-lg p-4 hover:bg-muted"
+              className="relative block border rounded-lg p-4 hover:bg-muted"
             >
-              <h2 className="text-xl font-semibold">{log.title}</h2>
-              <p>Score: {log.score}</p>
-              <p>Status: {log.is_completed ? 'Completed' : 'In Progress'}</p>
-            </Link>
+              <Link to={`/manga/${log.id}/edit`} className="block">
+                <h2 className="text-xl font-semibold">{log.title}</h2>
+                <p>Score: {log.score}</p>
+                <p>Status: {log.is_completed ? 'Completed' : 'In Progress'}</p>
+              </Link>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-2 right-2"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      your manga log entry from our servers.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction asChild>
+                      <Form
+                        action={`/manga/${log.id}/delete`}
+                        method="post"
+                        className="contents"
+                      >
+                        <input type="hidden" name="_action" value="delete" />
+                        <Button type="submit" variant="destructive">
+                          Continue
+                        </Button>
+                      </Form>
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           ))}
         </div>
       )}
