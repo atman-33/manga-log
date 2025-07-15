@@ -1,17 +1,7 @@
 import { Trash2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Form, Link } from 'react-router';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '~/components/ui/alert-dialog';
+import { AlertDialog } from '~/components/react-call/alert-dialog';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import {
@@ -110,41 +100,33 @@ const App = ({ loaderData }: Route.ComponentProps) => {
                 <p>Score: {log.score}</p>
                 <p>Status: {log.is_completed ? 'Completed' : 'In Progress'}</p>
               </Link>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute top-2 right-2"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      your manga log entry from our servers.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction asChild>
-                      <Form
-                        action={`/manga/${log.id}/delete`}
-                        method="post"
-                        className="contents"
-                      >
-                        <input type="hidden" name="_action" value="delete" />
-                        <Button type="submit" variant="destructive">
-                          Continue
-                        </Button>
-                      </Form>
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute top-2 right-2 cursor-pointer"
+                onClick={async () => {
+                  const form = document.getElementById(
+                    `delete-form-${log.id}`,
+                  ) as HTMLFormElement;
+                  const result = await AlertDialog.call({
+                    title: 'Delete Confirmation',
+                    message: `Are you sure you want to delete "${log.title}"? This action cannot be undone.`,
+                  });
+                  if (result === 'action') {
+                    form.submit();
+                  }
+                }}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+              <Form
+                action={`/manga/${log.id}/delete`}
+                method="post"
+                id={`delete-form-${log.id}`}
+                className="contents"
+              >
+                <input type="hidden" name="_action" value="delete" />
+              </Form>
             </div>
           ))}
         </div>
