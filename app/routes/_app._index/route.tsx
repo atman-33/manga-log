@@ -1,5 +1,7 @@
+import { Form } from 'react-router';
+import { Button } from '~/components/ui/button';
 import { getAuth } from '~/lib/auth/auth.server';
-import type { Route } from "./+types/route";
+import type { Route } from './+types/route';
 
 export const loader = async ({ context, request }: Route.LoaderArgs) => {
   const auth = getAuth(context);
@@ -22,7 +24,19 @@ const App = ({ loaderData }: Route.ComponentProps) => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Manga Log</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">Manga Log</h1>
+        <Form action="/manga/new" method="post">
+          <Button
+            variant="default"
+            type="submit"
+            name="_action"
+            value="new"
+          >
+            New
+          </Button>
+        </Form>
+      </div>
       {mangaLogs.length === 0 ? (
         <p>No manga logs found.</p>
       ) : (

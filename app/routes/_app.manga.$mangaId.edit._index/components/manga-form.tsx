@@ -12,14 +12,15 @@ import { useMangaForm } from '../hooks/use-manga-form';
 type MangaLog = InferSelectModel<typeof mangaLogs>;
 
 interface MangaFormProps {
+  mangaId: string;
   defaultValues?: MangaLog | undefined;
   isSubmitting: boolean;
 }
 
-export function MangaForm({ defaultValues, isSubmitting }: MangaFormProps) {
+export function MangaForm({ mangaId, defaultValues, isSubmitting }: MangaFormProps) {
   const [form, { title, score, is_completed, volume_progress, chapter_progress, note }] = useMangaForm();
   return (
-    <Form {...getFormProps(form)} className="space-y-4"> {/* Changed back to form from div */}
+    <Form {...getFormProps(form)} action={`/manga/${mangaId}/edit`} method='post' className="space-y-4"> {/* Changed back to form from div */}
       <div>
         <Label htmlFor="title" className="block text-sm font-medium">
           Title
