@@ -6,11 +6,6 @@ interface ConformTextareaProps<Schema>
   metadata: FieldMetadata<Schema>;
 }
 
-/**
- * Conformに対応したテキストエリア
- * @param param0
- * @returns
- */
 const ConformTextarea = <Schema,>({
   metadata,
   className,

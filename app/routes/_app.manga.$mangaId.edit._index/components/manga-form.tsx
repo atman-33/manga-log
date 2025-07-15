@@ -2,10 +2,10 @@ import { getFormProps } from '@conform-to/react';
 import { type InferSelectModel } from 'drizzle-orm';
 import { useFetcher } from 'react-router';
 import { ConformInput } from '~/components/conform/conform-input';
+import { ConformSwitch } from '~/components/conform/conform-switch';
 import { ConformTextarea } from '~/components/conform/conform-textarea';
 import { Button } from "~/components/ui/button";
 import { Label } from '~/components/ui/label';
-import { Switch } from '~/components/ui/switch';
 import type { mangaLogs } from '~/database/schema';
 import { useMangaForm } from '../hooks/use-manga-form';
 
@@ -40,7 +40,7 @@ export function MangaForm({ mangaId, defaultValues }: MangaFormProps) {
         </Label>
         <ConformInput
           metadata={score}
-          type="number"
+          type="text"
           id="score"
           name="score"
           step="0.1"
@@ -55,13 +55,13 @@ export function MangaForm({ mangaId, defaultValues }: MangaFormProps) {
           Status
         </Label>
         <div className="flex items-center space-x-2">
-          {/* TODO: need to link conform */}
-          <Switch
+          <ConformSwitch
+            metadata={is_completed}
             id="is_completed"
-            checked={is_completed.value === true}
+            defaultChecked={defaultValues?.is_completed ?? false}
             className="hover:cursor-pointer"
+            label='Completed'
           />
-          <Label htmlFor="is_completed">Completed</Label>
         </div>
       </div>
       <div>
@@ -70,7 +70,7 @@ export function MangaForm({ mangaId, defaultValues }: MangaFormProps) {
         </Label>
         <ConformInput
           metadata={volume_progress}
-          type="number"
+          type="text"
           id="volume_progress"
           name="volume_progress"
           defaultValue={defaultValues?.volume_progress ?? undefined}
@@ -83,7 +83,7 @@ export function MangaForm({ mangaId, defaultValues }: MangaFormProps) {
         </Label>
         <ConformInput
           metadata={chapter_progress}
-          type="number"
+          type="text"
           id="chapter_progress"
           name="chapter_progress"
           defaultValue={defaultValues?.chapter_progress ?? undefined}

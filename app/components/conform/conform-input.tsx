@@ -24,11 +24,6 @@ interface ConformInputProps<Schema>
   metadata: FieldMetadata<Schema>;
 }
 
-/**
- * Conformに対応したインプット
- * @param param0
- * @returns
- */
 const ConformInput = <Schema,>({
   metadata,
   className,
