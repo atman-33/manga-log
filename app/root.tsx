@@ -9,6 +9,7 @@ import {
 	ScrollRestoration
 } from "react-router";
 import type { Route } from './+types/root';
+import { ReactCallRoots } from './components/react-call';
 import { ThemeProvider } from './components/theme-provider';
 import { getAuth } from './lib/auth/auth.server';
 
@@ -65,7 +66,12 @@ export function Layout({ children }: { children: React.ReactNode; }) {
 }
 
 export default function App() {
-	return <Outlet />;
+	return (
+		<>
+			<Outlet />
+			<ReactCallRoots />
+		</>
+	);
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
