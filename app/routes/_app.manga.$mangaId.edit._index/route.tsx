@@ -1,6 +1,5 @@
 import { parseWithZod } from '@conform-to/zod';
 import { eq } from 'drizzle-orm';
-import { randomUUID } from 'node:crypto';
 import { useParams } from "react-router";
 import { mangaLogs } from '~/database/schema';
 import { getAuth } from '~/lib/auth/auth.server';
@@ -26,7 +25,7 @@ export async function loader({ context, params }: Route.LoaderArgs) {
   return { manga };
 }
 
-export async function action({ request, context }: Route.ActionArgs) {
+export async function action({ request, context, params }: Route.ActionArgs) {
   const auth = getAuth(context);
   const session = await auth.api.getSession({ headers: request.headers });
 
@@ -45,22 +44,22 @@ export async function action({ request, context }: Route.ActionArgs) {
     };
   }
 
-  const data = Object.fromEntries(formData.entries());
+  const validatedData = submission.value;
 
   try {
-    const validatedData = mangaLogSchema.parse(data);
+    const existingLog = await context.db.query.mangaLogs.findFirst({
+      where: eq(mangaLogs.id, params.mangaId),
+    });
 
-    const { id, ...rest } = validatedData; // Extract id if present
-
-    if (id) {
+    if (existingLog) {
       // Update existing manga log
       const updatedLog = await context.db
         .update(mangaLogs)
         .set({
-          ...rest,
-          user_id: session.user.id, // Ensure user_id is set/updated
+          ...validatedData,
+          user_id: session.user.id,
         })
-        .where(eq(mangaLogs.id, id))
+        .where(eq(mangaLogs.id, params.mangaId))
         .returning();
 
       if (updatedLog.length === 0) {
@@ -75,8 +74,8 @@ export async function action({ request, context }: Route.ActionArgs) {
       const newLog = await context.db
         .insert(mangaLogs)
         .values({
-          ...rest,
-          id: randomUUID(),
+          ...validatedData,
+          id: params.mangaId, // Use mangaId from params as the ID
           user_id: session.user.id,
         })
         .returning();
