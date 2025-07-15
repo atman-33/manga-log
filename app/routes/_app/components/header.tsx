@@ -1,18 +1,24 @@
-import { Link, useRouteLoaderData } from "react-router";
+import { Link, useNavigate, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { getAuthClient } from "~/lib/auth/auth-client";
 
 export function Header() {
+  const navigate = useNavigate();
   const { user, baseURL } = useRouteLoaderData("root") as {
-    user: { name: string };
+    user: { name: string; };
     baseURL: string;
   };
-  const { signIn, signOut } = getAuthClient({ baseURL });
+  const { signIn: signInAuth, signOut: signOutAuth } = getAuthClient({ baseURL });
 
   const signInGoogle = async () => {
-    await signIn.social({
+    await signInAuth.social({
       provider: "google",
     });
+  };
+
+  const signOut = async () => {
+    await signOutAuth();
+    navigate("/");
   };
 
   return (
