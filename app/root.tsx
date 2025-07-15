@@ -9,6 +9,7 @@ import {
 	ScrollRestoration
 } from "react-router";
 import type { Route } from './+types/root';
+import { ThemeProvider } from './components/theme-provider';
 import { getAuth } from './lib/auth/auth.server';
 
 export const links: Route.LinksFunction = () => [
@@ -37,7 +38,7 @@ export async function loader({
 	};
 }
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({ children }: { children: React.ReactNode; }) {
 	return (
 		<html lang="en">
 			<head>
@@ -47,7 +48,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Links />
 			</head>
 			<body>
-				{children}
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="system"
+					enableSystem
+					disableTransitionOnChange
+					storageKey="acme-theme"
+				>
+					{children}
+				</ThemeProvider>
 				<ScrollRestoration />
 				<Scripts />
 			</body>
