@@ -1,6 +1,6 @@
 import { getFormProps } from '@conform-to/react';
 import { type InferSelectModel } from 'drizzle-orm';
-import { Form } from 'react-router';
+import { useFetcher } from 'react-router';
 import { ConformInput } from '~/components/conform/conform-input';
 import { ConformTextarea } from '~/components/conform/conform-textarea';
 import { Button } from "~/components/ui/button";
@@ -14,13 +14,13 @@ type MangaLog = InferSelectModel<typeof mangaLogs>;
 interface MangaFormProps {
   mangaId: string;
   defaultValues?: MangaLog | undefined;
-  isSubmitting: boolean;
 }
 
-export function MangaForm({ mangaId, defaultValues, isSubmitting }: MangaFormProps) {
+export function MangaForm({ mangaId, defaultValues }: MangaFormProps) {
+  const fetcher = useFetcher();
   const [form, { title, score, is_completed, volume_progress, chapter_progress, note }] = useMangaForm();
   return (
-    <Form {...getFormProps(form)} action={`/manga/${mangaId}/edit`} method='post' className="space-y-4"> {/* Changed back to form from div */}
+    <fetcher.Form {...getFormProps(form)} method='post' className="space-y-4">
       <div>
         <Label htmlFor="title" className="block text-sm font-medium">
           Title
@@ -107,10 +107,15 @@ export function MangaForm({ mangaId, defaultValues, isSubmitting }: MangaFormPro
         <Button type="button" variant="outline">
           Cancel
         </Button>
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Saving..." : "Save"}
+        <Button type="submit"
+          disabled={
+            fetcher.state === 'submitting' || fetcher.state === 'loading'
+          }
+        >
+          Save
         </Button>
       </div>
-    </Form>
+      {fetcher.data && <div className="text-red-500 mt-2">{fetcher.data.error}</div>}
+    </fetcher.Form>
   );
 }

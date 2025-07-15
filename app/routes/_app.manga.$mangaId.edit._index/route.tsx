@@ -1,8 +1,7 @@
 import { parseWithZod } from '@conform-to/zod';
 import { eq } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
-import { Form, useNavigation, useParams } from "react-router"; // Keep Form and useNavigation from react-router-dom
-import { z } from "zod";
+import { useParams } from "react-router";
 import { mangaLogs } from '~/database/schema';
 import { getAuth } from '~/lib/auth/auth.server';
 import type { Route } from './+types/route';
@@ -87,13 +86,6 @@ export async function action({ request, context }: Route.ActionArgs) {
       };
     }
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      const errors = error.flatten().fieldErrors;
-      return {
-        errors,
-        status: 400,
-      };
-    }
     return {
       error: "An unexpected error occurred",
       status: 500,
@@ -101,25 +93,17 @@ export async function action({ request, context }: Route.ActionArgs) {
   }
 }
 
-export default function MangaRoute({ actionData, loaderData }: Route.ComponentProps) {
+export default function MangaRoute({ loaderData }: Route.ComponentProps) {
   const { mangaId } = useParams();
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
 
   const manga = loaderData?.manga;
-  const errors = actionData?.error;
-
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Add Manga Log</h1>
-      <Form method="post">
-        <MangaForm
-          mangaId={mangaId || ""}
-          defaultValues={manga}
-          isSubmitting={isSubmitting}
-        />
-      </Form>
-      {errors && <div className="text-red-500 mt-2">{errors}</div>}
+      <MangaForm
+        mangaId={mangaId || ""}
+        defaultValues={manga}
+      />
     </div>
   );
 }
