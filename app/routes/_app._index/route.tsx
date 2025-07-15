@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Form } from 'react-router';
+import { Form, Link } from 'react-router';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import {
@@ -89,11 +89,15 @@ const App = ({ loaderData }: Route.ComponentProps) => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredMangaLogs.map((log) => (
-            <div key={log.id} className="border rounded-lg p-4">
+            <Link
+              key={log.id}
+              to={`/manga/${log.id}/edit`}
+              className="block border rounded-lg p-4 hover:bg-muted"
+            >
               <h2 className="text-xl font-semibold">{log.title}</h2>
               <p>Score: {log.score}</p>
               <p>Status: {log.is_completed ? 'Completed' : 'In Progress'}</p>
-            </div>
+            </Link>
           ))}
         </div>
       )}
