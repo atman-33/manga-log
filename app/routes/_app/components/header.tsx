@@ -24,7 +24,7 @@ export function Header() {
   return (
     <header className="p-4 border-b">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-xl font-bold">
+        <Link to="/manga" className="text-xl font-bold">
           MangaLog
         </Link>
         <div>
