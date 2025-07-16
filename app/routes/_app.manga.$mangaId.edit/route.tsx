@@ -19,6 +19,8 @@ export async function loader({ context, params }: Route.LoaderArgs) {
       chapter_progress: true,
       note: true,
       user_id: true,
+      created_at: true,
+      updated_at: true
     },
   });
 
@@ -58,6 +60,7 @@ export async function action({ request, context, params }: Route.ActionArgs) {
         .set({
           ...validatedData,
           user_id: session.user.id,
+          updated_at: new Date().toISOString(),
         })
         .where(eq(mangaLogs.id, params.mangaId))
         .returning();
@@ -71,12 +74,15 @@ export async function action({ request, context, params }: Route.ActionArgs) {
       };
     } else {
       // Insert new manga log
+      const now = new Date().toISOString();
       const newLog = await context.db
         .insert(mangaLogs)
         .values({
           ...validatedData,
           id: params.mangaId, // Use mangaId from params as the ID
           user_id: session.user.id,
+          created_at: now,
+          updated_at: now,
         })
         .returning();
       return {

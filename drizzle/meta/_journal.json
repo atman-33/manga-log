@@ -36,6 +36,20 @@
       "when": 1752500773949,
       "tag": "0004_nervous_ultimatum",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1752678296633,
+      "tag": "0005_secret_mandroid",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1752678385985,
+      "tag": "0006_many_bloodaxe",
+      "breakpoints": true
     }
   ]
 }
