@@ -9,6 +9,7 @@ export default function LandingIndex() {
   const signInGoogle = async () => {
     await signInAuth.social({
       provider: "google",
+      callbackURL: '/manga'
     });
   };
 

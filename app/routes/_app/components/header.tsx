@@ -13,6 +13,7 @@ export function Header() {
   const signInGoogle = async () => {
     await signInAuth.social({
       provider: "google",
+      callbackURL: '/manga'
     });
   };
 
