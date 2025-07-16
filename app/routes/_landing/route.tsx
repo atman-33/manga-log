@@ -2,6 +2,7 @@ import { BookOpen } from "lucide-react";
 import { Link, Outlet, useNavigate, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { getAuthClient } from "~/lib/auth/auth-client";
+import { LandingFooter } from "./components/footer";
 
 function LandingHeader() {
   const navigate = useNavigate();
@@ -82,6 +83,7 @@ export default function LandingLayout() {
       <main>
         <Outlet />
       </main>
+      <LandingFooter />
     </div>
   );
 }
