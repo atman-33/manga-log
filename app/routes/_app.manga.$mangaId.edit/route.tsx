@@ -103,12 +103,9 @@ export default function MangaRoute({ loaderData }: Route.ComponentProps) {
 
   const manga = loaderData?.manga;
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Add Manga Log</h1>
-      <MangaForm
-        mangaId={mangaId || ""}
-        defaultValues={manga}
-      />
-    </div>
+    <MangaForm
+      mangaId={mangaId || ""}
+      defaultValues={manga}
+    />
   );
 }
