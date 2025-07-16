@@ -1,6 +1,7 @@
 import { BookOpen, Edit3, Plus, Search, Star, Trash2, TrendingUp } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Form, Link } from 'react-router';
+import { KeyboardShortcutsHelp } from '~/components/keyboard-shortcuts-help';
 import { AlertDialog } from '~/components/react-call/alert-dialog';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
@@ -14,6 +15,7 @@ import {
   SelectValue,
 } from '~/components/ui/select';
 import { StarRating } from '~/components/ui/star-rating';
+import { useCommonShortcuts } from '~/hooks/use-keyboard-shortcuts';
 import { getAuth } from '~/lib/auth/auth.server';
 import type { Route } from './+types/route';
 
@@ -39,6 +41,10 @@ const App = ({ loaderData }: Route.ComponentProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('updated');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
+
+  // Initialize keyboard shortcuts
+  const shortcuts = useCommonShortcuts(() => setShowKeyboardHelp(!showKeyboardHelp));
 
   const handleDeleteConfirmation = async (
     event: React.FormEvent<HTMLFormElement>,
@@ -264,6 +270,9 @@ const App = ({ loaderData }: Route.ComponentProps) => {
           </div>
         )}
       </div>
+
+      {/* Keyboard Shortcuts Help */}
+      <KeyboardShortcutsHelp shortcuts={shortcuts} />
     </div>
   );
 };

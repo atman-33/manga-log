@@ -10,11 +10,12 @@ import {
   Star,
   X
 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFetcher, useNavigate } from 'react-router';
 import { ConformInput } from '~/components/conform/conform-input';
 import { ConformSwitch } from '~/components/conform/conform-switch';
 import { ConformTextarea } from '~/components/conform/conform-textarea';
+import { showToast } from '~/components/custom-sonner';
 import { Button } from "~/components/ui/button";
 import { Label } from '~/components/ui/label';
 import { Progress } from '~/components/ui/progress';
@@ -60,6 +61,21 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
 
   const isLoading = fetcher.state === 'submitting' || fetcher.state === 'loading';
 
+  // Handle form submission results
+  useEffect(() => {
+    if (fetcher.data) {
+      if (fetcher.data.status === 200) {
+        showToast('success', `${defaultValues ? 'Updated' : 'Added'} "${fetcher.data.data?.title}" successfully!`);
+        setTimeout(() => navigate('/manga'), 1500);
+      } else if (fetcher.data.status === 201) {
+        showToast('success', `Added "${fetcher.data.data?.title}" to your collection!`);
+        setTimeout(() => navigate('/manga'), 1500);
+      } else if (fetcher.data.error) {
+        showToast('error', fetcher.data.error);
+      }
+    }
+  }, [fetcher.data, navigate, defaultValues]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950">
       <div className="container mx-auto px-4 py-8">
@@ -80,15 +96,15 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
               {STEPS.map((step, index) => (
                 <div key={step.id} className="flex items-center">
                   <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-300 ${currentStep >= step.id
-                      ? 'bg-gradient-to-r from-purple-600 to-blue-600 border-transparent text-white'
-                      : 'border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500'
+                    ? 'bg-gradient-to-r from-purple-600 to-blue-600 border-transparent text-white'
+                    : 'border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500'
                     }`}>
                     <step.icon className="w-5 h-5" />
                   </div>
                   {index < STEPS.length - 1 && (
                     <div className={`w-16 h-0.5 mx-2 transition-all duration-300 ${currentStep > step.id
-                        ? 'bg-gradient-to-r from-purple-600 to-blue-600'
-                        : 'bg-gray-300 dark:bg-gray-600'
+                      ? 'bg-gradient-to-r from-purple-600 to-blue-600'
+                      : 'bg-gray-300 dark:bg-gray-600'
                       }`} />
                   )}
                 </div>

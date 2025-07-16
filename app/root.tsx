@@ -9,6 +9,7 @@ import {
 	ScrollRestoration
 } from "react-router";
 import type { Route } from './+types/root';
+import { CustomToaster } from './components/custom-sonner';
 import { ReactCallRoots } from './components/react-call';
 import { ThemeProvider } from './components/theme-provider';
 import { getAuth } from './lib/auth/auth.server';
@@ -70,6 +71,7 @@ export default function App() {
 		<>
 			<Outlet />
 			<ReactCallRoots />
+			<CustomToaster />
 		</>
 	);
 }
