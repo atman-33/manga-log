@@ -35,6 +35,24 @@ const App = ({ loaderData }: Route.ComponentProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('title');
 
+  const handleDeleteConfirmation = async (
+    event: React.FormEvent<HTMLFormElement>,
+    logId: string,
+    logTitle: string,
+  ) => {
+    event.preventDefault(); // Prevent default form submission
+    const formElement = event.currentTarget; // Capture the form element
+
+    const result = await AlertDialog.call({
+      title: 'Delete Confirmation',
+      message: `Are you sure you want to delete "${logTitle}"? This action cannot be undone.`,
+    });
+
+    if (result === 'action') {
+      formElement.submit(); // Submit the form using the captured element
+    }
+  };
+
   const filteredMangaLogs = useMemo(() => {
     let logs = [...mangaLogs];
 
@@ -100,32 +118,24 @@ const App = ({ loaderData }: Route.ComponentProps) => {
                 <p>Score: {log.score}</p>
                 <p>Status: {log.is_completed ? 'Completed' : 'In Progress'}</p>
               </Link>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute top-2 right-2 cursor-pointer"
-                onClick={async () => {
-                  const form = document.getElementById(
-                    `delete-form-${log.id}`,
-                  ) as HTMLFormElement;
-                  const result = await AlertDialog.call({
-                    title: 'Delete Confirmation',
-                    message: `Are you sure you want to delete "${log.title}"? This action cannot be undone.`,
-                  });
-                  if (result === 'action') {
-                    form.submit();
-                  }
-                }}
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
               <Form
                 action={`/manga/${log.id}/delete`}
                 method="post"
                 id={`delete-form-${log.id}`}
                 className="contents"
+                onSubmit={(event) =>
+                  handleDeleteConfirmation(event, log.id, log.title)
+                }
               >
                 <input type="hidden" name="_action" value="delete" />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute top-2 right-2 cursor-pointer"
+                  type="submit" // Ensure this button submits the form
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
               </Form>
             </div>
           ))}
