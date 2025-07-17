@@ -44,6 +44,16 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
   const [form, { title, score, is_completed, volume_progress, chapter_progress, note }] = useMangaForm(defaultValues);
 
   const nextStep = () => {
+    // Step 1 validation: Title is required
+    if (currentStep === 1) {
+      const titleValue = title.value || '';
+      if (!titleValue.trim()) {
+        // Trigger validation by calling form.validate
+        form.validate();
+        return; // Don't proceed to next step
+      }
+    }
+
     if (currentStep < STEPS.length) {
       setCurrentStep(currentStep + 1);
     }
