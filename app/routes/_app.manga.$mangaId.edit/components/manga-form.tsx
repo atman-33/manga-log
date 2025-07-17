@@ -75,7 +75,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
   useEffect(() => {
     if (fetcher.data) {
       if (fetcher.data.status === 200) {
-        showToast('success', `${defaultValues ? 'Updated' : 'Added'} "${fetcher.data.data?.title}" successfully!`);
+        showToast('success', `Updated "${fetcher.data.data?.title}" successfully!`);
         setTimeout(() => navigate('/manga'), 1500);
       } else if (fetcher.data.status === 201) {
         showToast('success', `Added "${fetcher.data.data?.title}" to your collection!`);
@@ -84,7 +84,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
         showToast('error', fetcher.data.error);
       }
     }
-  }, [fetcher.data, navigate, defaultValues]);
+  }, [fetcher.data, navigate]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950">
