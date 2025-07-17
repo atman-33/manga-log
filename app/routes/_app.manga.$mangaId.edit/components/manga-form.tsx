@@ -41,7 +41,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
   const fetcher = useFetcher();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-  const [form, { title, score, is_completed, volume_progress, chapter_progress, note }] = useMangaForm();
+  const [form, { title, score, is_completed, volume_progress, chapter_progress, note }] = useMangaForm(defaultValues);
 
   const nextStep = () => {
     if (currentStep < STEPS.length) {
@@ -136,12 +136,10 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                       type="text"
                       id="title"
                       name="title"
-                      defaultValue={defaultValues?.title}
                       placeholder="Enter the manga title..."
                       className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50"
                     />
                   </div>
-
                   <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-xl p-6">
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Tips for adding manga:</h3>
                     <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
@@ -169,7 +167,6 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                         step="0.1"
                         min="1"
                         max="5"
-                        defaultValue={defaultValues?.score ?? undefined}
                         placeholder="Rate from 1.0 to 5.0"
                         className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50"
                       />
@@ -190,7 +187,6 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                       <ConformSwitch
                         metadata={is_completed}
                         id="is_completed"
-                        defaultChecked={defaultValues?.is_completed ?? false}
                         className="hover:cursor-pointer"
                         label='Mark as Completed'
                       />
@@ -215,7 +211,6 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                         type="number"
                         id="volume_progress"
                         name="volume_progress"
-                        defaultValue={defaultValues?.volume_progress ?? undefined}
                         placeholder="Last volume read"
                         className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50"
                       />
@@ -230,7 +225,6 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                         type="number"
                         id="chapter_progress"
                         name="chapter_progress"
-                        defaultValue={defaultValues?.chapter_progress ?? undefined}
                         placeholder="Last chapter read"
                         className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50"
                       />
@@ -260,7 +254,6 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                       id="note"
                       name="note"
                       rows={6}
-                      defaultValue={defaultValues?.note ?? ''}
                       placeholder="Share your thoughts, favorite moments, or anything you'd like to remember about this manga..."
                       className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50 resize-none"
                     />
