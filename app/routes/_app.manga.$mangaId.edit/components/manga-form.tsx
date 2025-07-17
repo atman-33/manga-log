@@ -290,7 +290,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                 </div>
 
                 <div className="flex gap-3">
-                  {currentStep < STEPS.length ? (
+                  {currentStep < STEPS.length && (
                     <Button
                       type="button"
                       onClick={nextStep}
@@ -299,7 +299,9 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                       Next
                       <ArrowRight className="w-4 h-4" />
                     </Button>
-                  ) : (
+                  )}
+
+                  {currentStep === STEPS.length && (
                     <Button
                       type="submit"
                       disabled={isLoading}
