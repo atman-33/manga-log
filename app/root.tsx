@@ -1,14 +1,18 @@
+import "./app.css";
+
 import {
 	isRouteErrorResponse,
 	Links,
 	Meta,
 	Outlet,
 	Scripts,
-	ScrollRestoration,
+	ScrollRestoration
 } from "react-router";
-
-import type { Route } from "./+types/root";
-import "./app.css";
+import type { Route } from './+types/root';
+import { CustomToaster } from './components/custom-sonner';
+import { ReactCallRoots } from './components/react-call';
+import { ThemeProvider } from './components/theme-provider';
+import { getAuth } from './lib/auth/auth.server';
 
 export const links: Route.LinksFunction = () => [
 	{ rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -23,7 +27,20 @@ export const links: Route.LinksFunction = () => [
 	},
 ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export async function loader({
+	context,
+	request,
+}: Route.LoaderArgs) {
+	const auth = getAuth(context);
+	const session = await auth.api.getSession({ headers: request.headers });
+
+	return {
+		baseURL: context.cloudflare.env.BETTER_AUTH_URL,
+		user: session?.user,
+	};
+}
+
+export function Layout({ children }: { children: React.ReactNode; }) {
 	return (
 		<html lang="en">
 			<head>
@@ -33,7 +50,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Links />
 			</head>
 			<body>
-				{children}
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="system"
+					enableSystem
+					disableTransitionOnChange
+					storageKey="acme-theme"
+				>
+					{children}
+				</ThemeProvider>
 				<ScrollRestoration />
 				<Scripts />
 			</body>
@@ -42,7 +67,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-	return <Outlet />;
+	return (
+		<>
+			<Outlet />
+			<ReactCallRoots />
+			<CustomToaster />
+		</>
+	);
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
