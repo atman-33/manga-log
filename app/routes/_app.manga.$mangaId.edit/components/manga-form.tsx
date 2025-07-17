@@ -125,151 +125,143 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
           <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 p-8">
             <fetcher.Form {...getFormProps(form)} method='post'>
               {/* Step 1: Basic Info */}
-              {currentStep === 1 && (
-                <div className="space-y-6 animate-in fade-in-50 duration-300">
+              <div className={`space-y-6 ${currentStep === 1 ? 'animate-in fade-in-50 duration-300' : 'hidden'}`}>
+                <div>
+                  <Label htmlFor="title" className="text-lg font-medium text-gray-900 dark:text-white mb-2 block">
+                    Manga Title *
+                  </Label>
+                  <ConformInput
+                    metadata={title}
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="Enter the manga title..."
+                    className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50"
+                  />
+                </div>
+                <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-xl p-6">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Tips for adding manga:</h3>
+                  <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                    <li>• Use the official English title when possible</li>
+                    <li>• Include subtitle if it's part of the official name</li>
+                    <li>• You can always edit this information later</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Step 2: Rating & Status */}
+              <div className={`space-y-6 ${currentStep === 2 ? 'animate-in fade-in-50 duration-300' : 'hidden'}`}>
+                <div>
+                  <Label className="text-lg font-medium text-gray-900 dark:text-white mb-4 block">
+                    Your Rating
+                  </Label>
+                  <div className="space-y-4">
+                    <ConformInput
+                      metadata={score}
+                      type="number"
+                      id="score"
+                      name="score"
+                      step="0.1"
+                      min="1"
+                      max="5"
+                      placeholder="Rate from 1.0 to 5.0"
+                      className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50"
+                    />
+                    {defaultValues?.score && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Current rating:</span>
+                        <StarRating rating={defaultValues.score} showValue />
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <Label className="text-lg font-medium text-gray-900 dark:text-white mb-4 block">
+                    Reading Status
+                  </Label>
+                  <div className="bg-white/50 dark:bg-gray-700/50 rounded-xl p-6 border-2 border-gray-200 dark:border-gray-600">
+                    <ConformSwitch
+                      metadata={is_completed}
+                      id="is_completed"
+                      className="hover:cursor-pointer"
+                      label='Mark as Completed'
+                    />
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                      Toggle this when you've finished reading the entire series
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 3: Progress */}
+              <div className={`space-y-6 ${currentStep === 3 ? 'animate-in fade-in-50 duration-300' : 'hidden'}`}>
+                <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <Label htmlFor="title" className="text-lg font-medium text-gray-900 dark:text-white mb-2 block">
-                      Manga Title *
+                    <Label htmlFor="volume_progress" className="text-lg font-medium text-gray-900 dark:text-white mb-2 block">
+                      Volume Progress
                     </Label>
                     <ConformInput
-                      metadata={title}
-                      type="text"
-                      id="title"
-                      name="title"
-                      placeholder="Enter the manga title..."
+                      metadata={volume_progress}
+                      type="number"
+                      id="volume_progress"
+                      name="volume_progress"
+                      placeholder="Last volume read"
                       className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50"
                     />
                   </div>
-                  <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-xl p-6">
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Tips for adding manga:</h3>
-                    <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                      <li>• Use the official English title when possible</li>
-                      <li>• Include subtitle if it's part of the official name</li>
-                      <li>• You can always edit this information later</li>
-                    </ul>
-                  </div>
-                </div>
-              )}
-
-              {/* Step 2: Rating & Status */}
-              {currentStep === 2 && (
-                <div className="space-y-6 animate-in fade-in-50 duration-300">
-                  <div>
-                    <Label className="text-lg font-medium text-gray-900 dark:text-white mb-4 block">
-                      Your Rating
-                    </Label>
-                    <div className="space-y-4">
-                      <ConformInput
-                        metadata={score}
-                        type="number"
-                        id="score"
-                        name="score"
-                        step="0.1"
-                        min="1"
-                        max="5"
-                        placeholder="Rate from 1.0 to 5.0"
-                        className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50"
-                      />
-                      {defaultValues?.score && (
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm text-gray-600 dark:text-gray-400">Current rating:</span>
-                          <StarRating rating={defaultValues.score} showValue />
-                        </div>
-                      )}
-                    </div>
-                  </div>
 
                   <div>
-                    <Label className="text-lg font-medium text-gray-900 dark:text-white mb-4 block">
-                      Reading Status
+                    <Label htmlFor="chapter_progress" className="text-lg font-medium text-gray-900 dark:text-white mb-2 block">
+                      Chapter Progress
                     </Label>
-                    <div className="bg-white/50 dark:bg-gray-700/50 rounded-xl p-6 border-2 border-gray-200 dark:border-gray-600">
-                      <ConformSwitch
-                        metadata={is_completed}
-                        id="is_completed"
-                        className="hover:cursor-pointer"
-                        label='Mark as Completed'
-                      />
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-                        Toggle this when you've finished reading the entire series
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Step 3: Progress */}
-              {currentStep === 3 && (
-                <div className="space-y-6 animate-in fade-in-50 duration-300">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <Label htmlFor="volume_progress" className="text-lg font-medium text-gray-900 dark:text-white mb-2 block">
-                        Volume Progress
-                      </Label>
-                      <ConformInput
-                        metadata={volume_progress}
-                        type="number"
-                        id="volume_progress"
-                        name="volume_progress"
-                        placeholder="Last volume read"
-                        className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="chapter_progress" className="text-lg font-medium text-gray-900 dark:text-white mb-2 block">
-                        Chapter Progress
-                      </Label>
-                      <ConformInput
-                        metadata={chapter_progress}
-                        type="number"
-                        id="chapter_progress"
-                        name="chapter_progress"
-                        placeholder="Last chapter read"
-                        className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl p-6">
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Progress Tracking Tips:</h3>
-                    <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                      <li>• Track either volumes, chapters, or both</li>
-                      <li>• Leave blank if you're not sure about your progress</li>
-                      <li>• You can update this anytime as you read</li>
-                    </ul>
-                  </div>
-                </div>
-              )}
-
-              {/* Step 4: Notes */}
-              {currentStep === 4 && (
-                <div className="space-y-6 animate-in fade-in-50 duration-300">
-                  <div>
-                    <Label htmlFor="note" className="text-lg font-medium text-gray-900 dark:text-white mb-2 block">
-                      Personal Notes
-                    </Label>
-                    <ConformTextarea
-                      metadata={note}
-                      id="note"
-                      name="note"
-                      rows={6}
-                      placeholder="Share your thoughts, favorite moments, or anything you'd like to remember about this manga..."
-                      className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50 resize-none"
+                    <ConformInput
+                      metadata={chapter_progress}
+                      type="number"
+                      id="chapter_progress"
+                      name="chapter_progress"
+                      placeholder="Last chapter read"
+                      className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50"
                     />
                   </div>
-
-                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-6">
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Note Ideas:</h3>
-                    <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                      <li>• What did you love about this manga?</li>
-                      <li>• Favorite characters or story arcs</li>
-                      <li>• Would you recommend it to others?</li>
-                      <li>• Any memorable quotes or scenes</li>
-                    </ul>
-                  </div>
                 </div>
-              )}
+
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl p-6">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Progress Tracking Tips:</h3>
+                  <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                    <li>• Track either volumes, chapters, or both</li>
+                    <li>• Leave blank if you're not sure about your progress</li>
+                    <li>• You can update this anytime as you read</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Step 4: Notes */}
+              <div className={`space-y-6 ${currentStep === 4 ? 'animate-in fade-in-50 duration-300' : 'hidden'}`}>
+                <div>
+                  <Label htmlFor="note" className="text-lg font-medium text-gray-900 dark:text-white mb-2 block">
+                    Personal Notes
+                  </Label>
+                  <ConformTextarea
+                    metadata={note}
+                    id="note"
+                    name="note"
+                    rows={6}
+                    placeholder="Share your thoughts, favorite moments, or anything you'd like to remember about this manga..."
+                    className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50 resize-none"
+                  />
+                </div>
+
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-6">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Note Ideas:</h3>
+                  <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                    <li>• What did you love about this manga?</li>
+                    <li>• Favorite characters or story arcs</li>
+                    <li>• Would you recommend it to others?</li>
+                    <li>• Any memorable quotes or scenes</li>
+                  </ul>
+                </div>
+              </div>
 
               {/* Navigation Buttons */}
               <div className="flex justify-between items-center mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
