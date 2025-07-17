@@ -15,19 +15,22 @@
 
 ## Route Component Structure
 ```typescript
-import type { LoaderFunctionArgs, ActionFunctionArgs } from 'react-router';
+import type { Route } from './+types/route';
 
-export async function loader({ request, params, context }: LoaderFunctionArgs) {
+export async function loader({ request, params, context }: Route.LoaderArgs) {
   // Server-side data loading
+  // Return an object
+  return { ... };
 }
 
-export async function action({ request, params, context }: ActionFunctionArgs) {
+export async function action({ request, params, context }: Route.ActionArgs) {
   // Handle form submissions and mutations
+  // Return an object
+  return { ... };
 }
 
-export default function RouteComponent() {
-  const data = useLoaderData<typeof loader>();
-  // Component implementation
+export default function Page({ loaderData, actionData }: Route.ComponentProps) {
+  // Component implementation with typed props
 }
 ```
 
