@@ -1,5 +1,5 @@
-import { getAuth } from "~/lib/auth/auth.server";
-import type { Route } from "./+types/route";
+import { getAuth } from '~/lib/auth/auth.server';
+import type { Route } from './+types/route';
 
 export async function loader({ context, request }: Route.LoaderArgs) {
   const auth = getAuth(context);
