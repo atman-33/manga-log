@@ -34,6 +34,9 @@ This is **manga-log**, a React Router v7 + Cloudflare full-stack application for
 
 ## Key Directories
 - `app/`: Main application code (routes, components, utilities)
+- `app/components/`: Shared components used across multiple pages
+- `app/routes/`: File-based routing structure
+- `app/routes/{folder}/components/`: Page-specific components for each route
 - `database/`: Database schema and migrations
 - `workers/`: Cloudflare Workers code
 - `public/`: Static assets
