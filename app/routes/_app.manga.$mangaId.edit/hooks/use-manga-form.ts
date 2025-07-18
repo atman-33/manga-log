@@ -49,6 +49,7 @@ const useMangaForm = (defaultValues?: MangaLog) => {
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: mangaLogSchema });
     },
+    shouldValidate: 'onInput',
   });
 
   return form;
