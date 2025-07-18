@@ -43,15 +43,21 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [form, { title, score, is_completed, volume_progress, chapter_progress, note }] = useMangaForm(defaultValues);
 
-  const nextStep = () => {
+  const validateCurrentStep = () => {
     // Step 1 validation: Title is required
     if (currentStep === 1) {
       const titleValue = title.value || '';
       if (!titleValue.trim()) {
-        // Trigger validation by calling form.validate
         form.validate();
-        return; // Don't proceed to next step
+        return false;
       }
+    }
+    return true;
+  };
+
+  const nextStep = () => {
+    if (!validateCurrentStep()) {
+      return;
     }
 
     if (currentStep < STEPS.length) {
@@ -62,6 +68,22 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
   const prevStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const goToStep = (stepNumber: number) => {
+    // Allow going to previous steps without validation
+    if (stepNumber < currentStep) {
+      setCurrentStep(stepNumber);
+      return;
+    }
+
+    // For forward navigation, validate current step first
+    if (stepNumber > currentStep) {
+      if (!validateCurrentStep()) {
+        return;
+      }
+      setCurrentStep(stepNumber);
     }
   };
 
@@ -105,12 +127,21 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
             <div className="flex items-center justify-between mb-4">
               {STEPS.map((step, index) => (
                 <div key={step.id} className="flex items-center">
-                  <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-300 ${currentStep >= step.id
-                    ? 'bg-gradient-to-r from-purple-600 to-blue-600 border-transparent text-white'
-                    : 'border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500'
-                    }`}>
-                    <step.icon className="w-5 h-5" />
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => goToStep(step.id)}
+                    className={`group flex items-center justify-center w-12 h-12 rounded-full border-2 transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 cursor-pointer ${currentStep >= step.id
+                      ? 'bg-gradient-to-r from-purple-600 to-blue-600 border-transparent text-white shadow-lg'
+                      : currentStep === step.id - 1
+                        ? 'border-purple-300 dark:border-purple-500 text-purple-600 dark:text-purple-400 hover:border-purple-500 dark:hover:border-purple-300'
+                        : 'border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500 hover:border-gray-400 dark:hover:border-gray-500'
+                      }`}
+                    disabled={step.id > currentStep + 1}
+                    title={`Go to ${step.title}`}
+                  >
+                    <step.icon className={`w-5 h-5 transition-transform duration-200 ${currentStep >= step.id ? '' : 'group-hover:scale-110'
+                      }`} />
+                  </button>
                   {index < STEPS.length - 1 && (
                     <div className={`w-16 h-0.5 mx-2 transition-all duration-300 ${currentStep > step.id
                       ? 'bg-gradient-to-r from-purple-600 to-blue-600'
@@ -120,12 +151,33 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                 </div>
               ))}
             </div>
-            <div className="text-center">
+
+            {/* Step Labels */}
+            <div className="flex items-center justify-between mb-4 px-1">
+              {STEPS.map((step) => (
+                <div key={`label-${step.id}`} className="flex flex-col items-center text-center max-w-[120px]">
+                  <span className={`text-sm font-medium transition-colors duration-200 ${currentStep >= step.id
+                    ? 'text-purple-600 dark:text-purple-400'
+                    : 'text-gray-500 dark:text-gray-400'
+                    }`}>
+                    {step.title}
+                  </span>
+                  <span className={`text-xs mt-1 transition-colors duration-200 ${currentStep === step.id
+                    ? 'text-gray-700 dark:text-gray-300'
+                    : 'text-gray-400 dark:text-gray-500'
+                    }`}>
+                    {step.description}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mb-4">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                 {STEPS[currentStep - 1].title}
               </h2>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                {STEPS[currentStep - 1].description}
+                Step {currentStep} of {STEPS.length}: {STEPS[currentStep - 1].description}
               </p>
             </div>
             <Progress value={(currentStep / STEPS.length) * 100} className="mt-4" />
