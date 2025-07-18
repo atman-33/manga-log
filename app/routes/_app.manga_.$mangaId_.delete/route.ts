@@ -2,7 +2,17 @@ import { and, eq } from 'drizzle-orm';
 import { redirect } from 'react-router';
 import { mangaLogs } from '~/database/schema';
 import { getAuth } from '~/lib/auth/auth.server';
+import { generateMeta } from '~/lib/meta';
 import type { Route } from './+types/route';
+
+export function meta(_: Route.MetaArgs) {
+  return generateMeta({
+    title: 'Delete Manga',
+    description: 'Delete manga from your collection.',
+    keywords: ['delete manga', 'remove manga'],
+    noIndex: true, // Don't index action-only routes
+  });
+}
 
 export const action = async ({
   request,

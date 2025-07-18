@@ -3,9 +3,29 @@ import { eq } from 'drizzle-orm';
 import { useParams } from "react-router";
 import { mangaLogs } from '~/database/schema';
 import { getAuth } from '~/lib/auth/auth.server';
+import { generateMeta } from '~/lib/meta';
 import type { Route } from './+types/route';
+
 import { MangaForm } from "./components/manga-form";
 import { mangaLogSchema } from './hooks/use-manga-form';
+
+export function meta({ data }: Route.MetaArgs) {
+  const mangaTitle = data?.manga?.title;
+
+  if (mangaTitle) {
+    return generateMeta({
+      title: `Edit ${mangaTitle}`,
+      description: `Edit your reading progress and details for ${mangaTitle}. Update scores, progress, and personal notes.`,
+      keywords: ["edit manga", "manga progress", "update manga"],
+    });
+  }
+
+  return generateMeta({
+    title: "Add New Manga",
+    description: "Add a new manga to your collection and start tracking your reading progress.",
+    keywords: ["add manga", "new manga", "manga tracking"],
+  });
+}
 
 export async function loader({ context, params }: Route.LoaderArgs) {
   const manga = await context.db.query.mangaLogs.findFirst({

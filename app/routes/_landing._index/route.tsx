@@ -2,6 +2,16 @@ import { BookOpen, Star, TrendingUp, Users } from "lucide-react";
 import { useRouteLoaderData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { getAuthClient } from "~/lib/auth/auth-client";
+import { generateMeta } from "~/lib/meta";
+import type { Route } from './+types/route';
+
+export function meta(_: Route.MetaArgs) {
+  return generateMeta({
+    title: "Your Personal Manga Companion",
+    description: "Transform your manga reading experience with beautiful tracking, intelligent organization, and personal insights. Track your progress, rate series, and build your curated collection.",
+    keywords: ["manga tracker", "reading progress", "manga collection", "anime", "japanese comics", "reading log"],
+  });
+}
 
 export default function LandingIndex() {
   const rootData = useRouteLoaderData("root") as { baseURL: string; } | undefined;

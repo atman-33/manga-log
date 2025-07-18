@@ -1,13 +1,15 @@
 import * as schema from "~/database/schema";
-
+import { generateMeta } from '~/lib/meta';
 import type { Route } from './+types/route';
 import { Welcome } from "./components/welcome";
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
+export function meta(_: Route.MetaArgs) {
+  return generateMeta({
+    title: "Home Demo",
+    description: "Welcome to React Router demo with Cloudflare Workers and D1 database",
+    keywords: ["react router", "cloudflare workers", "demo"],
+    noIndex: true, // Don't index demo pages
+  });
 }
 
 export async function action({ request, context }: Route.ActionArgs) {

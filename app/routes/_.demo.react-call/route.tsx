@@ -2,6 +2,17 @@
 import { useState } from 'react';
 import { AlertDialog } from '~/components/react-call/alert-dialog';
 import { Button } from '~/components/ui/button';
+import { generateMeta } from '~/lib/meta';
+import type { Route } from './+types/route';
+
+export function meta(_: Route.MetaArgs) {
+  return generateMeta({
+    title: "React Call Demo",
+    description: "Demo of react-call library for modal dialogs and components",
+    keywords: ["react call", "modal", "dialog", "demo"],
+    noIndex: true, // Don't index demo pages
+  });
+}
 
 const DemoReactCallPage = () => {
   const [response, setResponse] = useState<string>();
