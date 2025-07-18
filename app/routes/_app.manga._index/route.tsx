@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { KeyboardShortcutsHelp } from '~/components/keyboard-shortcuts-help';
 import { AlertDialog } from '~/components/react-call/alert-dialog';
-import { useCommonShortcuts } from '~/hooks/use-keyboard-shortcuts';
 import { getAuth } from '~/lib/auth/auth.server';
 import { generateMeta } from '~/lib/meta';
 import type { Route } from './+types/route';
@@ -41,9 +40,6 @@ const App = ({ loaderData }: Route.ComponentProps) => {
   const [sortBy, setSortBy] = useState('updated');
   const [statusFilter, setStatusFilter] = useState('all');
   const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
-
-  // Initialize keyboard shortcuts
-  const shortcuts = useCommonShortcuts(() => setShowKeyboardHelp(!showKeyboardHelp));
 
   const handleDeleteConfirmation = async (
     event: React.FormEvent<HTMLFormElement>,
@@ -128,8 +124,6 @@ const App = ({ loaderData }: Route.ComponentProps) => {
         />
       </div>
 
-      {/* Keyboard Shortcuts Help */}
-      <KeyboardShortcutsHelp shortcuts={shortcuts} />
     </div>
   );
 };
