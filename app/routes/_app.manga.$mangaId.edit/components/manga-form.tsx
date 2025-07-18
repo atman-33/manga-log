@@ -365,39 +365,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
               <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
                 {/* Mobile Layout - Stack buttons vertically */}
                 <div className="flex flex-col gap-3 sm:hidden">
-                  {/* Primary Action Button */}
-                  {currentStep < STEPS.length && (
-                    <Button
-                      type="button"
-                      onClick={nextStep}
-                      className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white flex items-center justify-center gap-2"
-                    >
-                      Next
-                      <ArrowRight className="w-4 h-4" />
-                    </Button>
-                  )}
-
-                  {currentStep === STEPS.length && (
-                    <Button
-                      type="submit"
-                      disabled={isLoading}
-                      className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white flex items-center justify-center gap-2"
-                    >
-                      {isLoading ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          Saving...
-                        </>
-                      ) : (
-                        <>
-                          <Save className="w-4 h-4" />
-                          Save Manga
-                        </>
-                      )}
-                    </Button>
-                  )}
-
-                  {/* Secondary Actions */}
+                  {/* Navigation Actions */}
                   <div className="flex gap-2">
                     {currentStep > 1 && (
                       <Button
@@ -408,6 +376,17 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                       >
                         <ArrowLeft className="w-4 h-4" />
                         Previous
+                      </Button>
+                    )}
+
+                    {currentStep < STEPS.length && (
+                      <Button
+                        type="button"
+                        onClick={nextStep}
+                        className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white flex items-center justify-center gap-2"
+                      >
+                        Next
+                        <ArrowRight className="w-4 h-4" />
                       </Button>
                     )}
 
@@ -423,7 +402,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                   </div>
                 </div>
 
-                {/* Desktop Layout - Original horizontal layout */}
+                {/* Desktop Layout */}
                 <div className="hidden sm:flex justify-between items-center">
                   <div className="flex gap-3">
                     {currentStep > 1 && (
@@ -460,26 +439,6 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                         <ArrowRight className="w-4 h-4" />
                       </Button>
                     )}
-
-                    {currentStep === STEPS.length && (
-                      <Button
-                        type="submit"
-                        disabled={isLoading}
-                        className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white flex items-center gap-2"
-                      >
-                        {isLoading ? (
-                          <>
-                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            Saving...
-                          </>
-                        ) : (
-                          <>
-                            <Save className="w-4 h-4" />
-                            Save Manga
-                          </>
-                        )}
-                      </Button>
-                    )}
                   </div>
                 </div>
               </div>
@@ -493,6 +452,28 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
             </fetcher.Form>
           </div>
         </div>
+      </div>
+
+      {/* Floating Save Button */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <Button
+          type="submit"
+          form={form.id}
+          disabled={isLoading}
+          className="h-14 px-6 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-full flex items-center gap-3 font-medium"
+        >
+          {isLoading ? (
+            <>
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <span>Saving...</span>
+            </>
+          ) : (
+            <>
+              <Save className="w-5 h-5" />
+              <span>Save</span>
+            </>
+          )}
+        </Button>
       </div>
     </div>
   );
