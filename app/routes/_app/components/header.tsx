@@ -1,6 +1,7 @@
 import { BookOpen } from "lucide-react";
 import { Link, useNavigate, useRouteLoaderData } from "react-router";
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
+import { ThemeToggle } from "~/components/theme-toggle";
 import { getAuthClient } from "~/lib/auth/auth-client";
 
 export function Header() {
@@ -36,10 +37,11 @@ export function Header() {
             </span>
           </Link>
 
-          <div>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
             {user ? (
               <div className="flex items-center gap-4">
-                <span className="text-gray-700 dark:text-gray-300">{user.name}</span>
+                <span className="text-gray-700 dark:text-gray-300 hidden sm:block">{user.name}</span>
                 <Button
                   onClick={() => signOut()}
                   variant="outline"

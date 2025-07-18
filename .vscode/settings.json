@@ -11,5 +11,9 @@
   "editor.quickSuggestions": {
     "strings": "on"
   },
-  "typescript.autoClosingTags": false
+  "typescript.autoClosingTags": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "never",
+    "source.organizeImports": "never"
+  },
 }
