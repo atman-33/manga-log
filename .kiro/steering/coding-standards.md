@@ -1,5 +1,11 @@
 # Coding Standards
 
+## Comments and Documentation
+- Write all source code comments in English
+- Use clear and concise language for comments
+- Document complex logic and business rules
+- Include JSDoc comments for public functions and components
+
 ## Code Formatting & Linting
 - Use Biome for all linting and formatting
 - Single quotes for JavaScript/TypeScript strings
@@ -31,9 +37,3 @@
 - Internal utilities and components
 - Relative imports last
 - Use path aliases when configured
-
-## Comments and Documentation
-- Write all source code comments in English
-- Use clear and concise language for comments
-- Document complex logic and business rules
-- Include JSDoc comments for public functions and components
