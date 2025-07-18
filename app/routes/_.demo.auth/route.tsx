@@ -1,15 +1,15 @@
 import { getAuthClient } from "~/lib/auth/auth-client";
 import { getAuth } from "~/lib/auth/auth.server";
+import { generateMeta } from '~/lib/meta';
 import type { Route } from './+types/route';
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "Better Auth / React Router App + Cloudflare Workers" },
-    {
-      name: "description",
-      content: "Welcome to React Router hosted on Cloudflare Workers!",
-    },
-  ];
+export function meta(_: Route.MetaArgs) {
+  return generateMeta({
+    title: "Auth Demo",
+    description: "Authentication demo using Better Auth with React Router and Cloudflare Workers",
+    keywords: ["auth demo", "better auth", "authentication"],
+    noIndex: true, // Don't index demo pages
+  });
 }
 
 export async function loader({ context, request }: Route.LoaderArgs) {

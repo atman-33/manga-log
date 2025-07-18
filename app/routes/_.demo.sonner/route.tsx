@@ -1,6 +1,17 @@
 import { toast } from 'sonner';
 import { showToast } from '~/components/custom-sonner';
 import { Button } from '~/components/ui/button';
+import { generateMeta } from '~/lib/meta';
+import type { Route } from './+types/route';
+
+export function meta(_: Route.MetaArgs) {
+  return generateMeta({
+    title: "Sonner Toast Demo",
+    description: "Demo of Sonner toast notifications with custom styling",
+    keywords: ["sonner", "toast", "notifications", "demo"],
+    noIndex: true, // Don't index demo pages
+  });
+}
 
 const DemoToastPage = () => {
   return (

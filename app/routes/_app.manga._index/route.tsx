@@ -3,11 +3,20 @@ import { KeyboardShortcutsHelp } from '~/components/keyboard-shortcuts-help';
 import { AlertDialog } from '~/components/react-call/alert-dialog';
 import { useCommonShortcuts } from '~/hooks/use-keyboard-shortcuts';
 import { getAuth } from '~/lib/auth/auth.server';
+import { generateMeta } from '~/lib/meta';
 import type { Route } from './+types/route';
 import { MangaGrid } from './components/manga-grid';
 import { PageHeader } from './components/page-header';
 import { SearchAndFilters } from './components/search-and-filters';
 import { StatsCards } from './components/stats-cards';
+
+export function meta(_: Route.MetaArgs) {
+  return generateMeta({
+    title: "My Manga Collection",
+    description: "View and manage your personal manga collection. Track reading progress, scores, and notes for all your favorite series.",
+    keywords: ["manga collection", "reading progress", "manga library", "personal collection"],
+  });
+}
 
 export const loader = async ({ context, request }: Route.LoaderArgs) => {
   const auth = getAuth(context);
