@@ -1,6 +1,7 @@
 import { BookOpen } from "lucide-react";
 import { Link, useNavigate, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/ui/button";
+import { ThemeToggle } from "~/components/theme-toggle";
 import { getAuthClient } from "~/lib/auth/auth-client";
 
 export function LandingHeader() {
@@ -29,17 +30,21 @@ export function LandingHeader() {
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-700/50">
       <div className="container mx-auto px-4 py-4">
-        <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <BookOpen className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-              MangaLog
-            </span>
-          </Link>
+        <div className="flex items-center justify-between">
+          {/* Left: Logo */}
+          <div className="flex-1">
+            <Link to="/" className="flex items-center gap-2 group w-fit">
+              <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <BookOpen className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                MangaLog
+              </span>
+            </Link>
+          </div>
 
-          <nav className="hidden md:flex items-center gap-8">
+          {/* Center: Navigation */}
+          <nav className="hidden md:flex items-center gap-8 flex-1 justify-center">
             <Link to="#features" className="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
               Features
             </Link>
@@ -48,10 +53,12 @@ export function LandingHeader() {
             </Link>
           </nav>
 
-          <div>
+          {/* Right: Theme Toggle + Auth */}
+          <div className="flex items-center gap-3 flex-1 justify-end">
+            <ThemeToggle />
             {rootData?.user ? (
               <div className="flex items-center gap-4">
-                <span className="text-gray-700 dark:text-gray-300">{rootData.user.name}</span>
+                <span className="text-gray-700 dark:text-gray-300 hidden sm:block">{rootData.user.name}</span>
                 <Button
                   onClick={() => signOut()}
                   variant="outline"
