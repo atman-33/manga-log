@@ -1,4 +1,4 @@
-import { BookOpen, Edit3, Plus, Search, Star, Trash2, TrendingUp } from 'lucide-react';
+import { BookOpen, CircleCheck, Edit3, Plus, Search, Star, Trash2, TrendingUp } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Form, Link } from 'react-router';
 import { KeyboardShortcutsHelp } from '~/components/keyboard-shortcuts-help';
@@ -154,7 +154,7 @@ const App = ({ loaderData }: Route.ComponentProps) => {
             <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-4 border border-gray-200/50 dark:border-gray-700/50">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
-                  <TrendingUp className="w-5 h-5 text-white" />
+                  <CircleCheck className="w-5 h-5 text-white" />
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.completed}</p>
@@ -166,7 +166,7 @@ const App = ({ loaderData }: Route.ComponentProps) => {
             <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-4 border border-gray-200/50 dark:border-gray-700/50">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
-                  <BookOpen className="w-5 h-5 text-white" />
+                  <TrendingUp className="w-5 h-5 text-white" />
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.inProgress}</p>
