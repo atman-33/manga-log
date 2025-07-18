@@ -14,8 +14,8 @@ export function FloatingSaveButton({ formId, isLoading }: FloatingSaveButtonProp
         disabled={isLoading}
         className={`
           group relative w-16 h-16 
-          bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600
-          hover:from-emerald-400 hover:via-green-400 hover:to-teal-500
+          bg-gradient-to-br from-emerald-600 via-green-700 to-teal-800
+          hover:from-emerald-500 hover:via-green-600 hover:to-teal-700
           active:from-emerald-600 active:via-green-600 active:to-teal-700
           disabled:from-gray-400 disabled:via-gray-500 disabled:to-gray-600
           text-white rounded-full 
@@ -25,7 +25,6 @@ export function FloatingSaveButton({ formId, isLoading }: FloatingSaveButtonProp
           transition-all duration-300 ease-out
           flex items-center justify-center
           backdrop-blur-sm
-          border border-white/10
           ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer hover:-translate-y-1'}
         `}
         title={isLoading ? "Saving..." : "Save Manga"}
