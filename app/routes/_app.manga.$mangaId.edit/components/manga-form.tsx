@@ -126,7 +126,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
           <div className="mb-8">
             {/* Mobile-first Progress Indicator */}
             <div className="flex items-center justify-center mb-4 overflow-x-auto px-2">
-              <div className="flex items-center min-w-max">
+              <div className="flex items-center min-w-max py-2">
                 {STEPS.map((step, index) => (
                   <div key={step.id} className="flex items-center">
                     <button
