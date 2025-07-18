@@ -124,36 +124,39 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
 
           {/* Progress Indicator */}
           <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              {STEPS.map((step, index) => (
-                <div key={step.id} className="flex items-center">
-                  <button
-                    type="button"
-                    onClick={() => goToStep(step.id)}
-                    className={`group flex items-center justify-center w-12 h-12 rounded-full border-2 transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 cursor-pointer ${currentStep >= step.id
-                      ? 'bg-gradient-to-r from-purple-600 to-blue-600 border-transparent text-white shadow-lg'
-                      : currentStep === step.id - 1
-                        ? 'border-purple-300 dark:border-purple-500 text-purple-600 dark:text-purple-400 hover:border-purple-500 dark:hover:border-purple-300'
-                        : 'border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500 hover:border-gray-400 dark:hover:border-gray-500'
-                      }`}
-                    disabled={step.id > currentStep + 1}
-                    title={`Go to ${step.title}`}
-                  >
-                    <step.icon className={`w-5 h-5 transition-transform duration-200 ${currentStep >= step.id ? '' : 'group-hover:scale-110'
-                      }`} />
-                  </button>
-                  {index < STEPS.length - 1 && (
-                    <div className={`w-16 h-0.5 mx-2 transition-all duration-300 ${currentStep > step.id
-                      ? 'bg-gradient-to-r from-purple-600 to-blue-600'
-                      : 'bg-gray-300 dark:bg-gray-600'
-                      }`} />
-                  )}
-                </div>
-              ))}
+            {/* Mobile-first Progress Indicator */}
+            <div className="flex items-center justify-center mb-4 overflow-x-auto px-2">
+              <div className="flex items-center min-w-max">
+                {STEPS.map((step, index) => (
+                  <div key={step.id} className="flex items-center">
+                    <button
+                      type="button"
+                      onClick={() => goToStep(step.id)}
+                      className={`group flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 cursor-pointer ${currentStep >= step.id
+                        ? 'bg-gradient-to-r from-purple-600 to-blue-600 border-transparent text-white shadow-lg'
+                        : currentStep === step.id - 1
+                          ? 'border-purple-300 dark:border-purple-500 text-purple-600 dark:text-purple-400 hover:border-purple-500 dark:hover:border-purple-300'
+                          : 'border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500 hover:border-gray-400 dark:hover:border-gray-500'
+                        }`}
+                      disabled={step.id > currentStep + 1}
+                      title={`Go to ${step.title}`}
+                    >
+                      <step.icon className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 ${currentStep >= step.id ? '' : 'group-hover:scale-110'
+                        }`} />
+                    </button>
+                    {index < STEPS.length - 1 && (
+                      <div className={`w-8 sm:w-12 h-0.5 mx-1 sm:mx-2 transition-all duration-300 ${currentStep > step.id
+                        ? 'bg-gradient-to-r from-purple-600 to-blue-600'
+                        : 'bg-gray-300 dark:bg-gray-600'
+                        }`} />
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* Step Labels */}
-            <div className="flex items-center justify-between mb-4 px-1">
+            {/* Step Labels - Mobile Responsive */}
+            <div className="hidden sm:flex items-center justify-between mb-4 px-1">
               {STEPS.map((step) => (
                 <div key={`label-${step.id}`} className="flex flex-col items-center text-center max-w-[120px]">
                   <span className={`text-sm font-medium transition-colors duration-200 ${currentStep >= step.id
@@ -172,8 +175,9 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
               ))}
             </div>
 
+            {/* Current Step Info */}
             <div className="text-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">
                 {STEPS[currentStep - 1].title}
               </h2>
               <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -326,37 +330,15 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
               </div>
 
               {/* Navigation Buttons */}
-              <div className="flex justify-between items-center mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <div className="flex gap-3">
-                  {currentStep > 1 && (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={prevStep}
-                      className="flex items-center gap-2"
-                    >
-                      <ArrowLeft className="w-4 h-4" />
-                      Previous
-                    </Button>
-                  )}
-
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    onClick={handleCancel}
-                    className="flex items-center gap-2 text-gray-600 dark:text-gray-400"
-                  >
-                    <X className="w-4 h-4" />
-                    Cancel
-                  </Button>
-                </div>
-
-                <div className="flex gap-3">
+              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+                {/* Mobile Layout - Stack buttons vertically */}
+                <div className="flex flex-col gap-3 sm:hidden">
+                  {/* Primary Action Button */}
                   {currentStep < STEPS.length && (
                     <Button
                       type="button"
                       onClick={nextStep}
-                      className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white flex items-center gap-2"
+                      className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white flex items-center justify-center gap-2"
                     >
                       Next
                       <ArrowRight className="w-4 h-4" />
@@ -367,7 +349,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                     <Button
                       type="submit"
                       disabled={isLoading}
-                      className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white flex items-center gap-2"
+                      className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white flex items-center justify-center gap-2"
                     >
                       {isLoading ? (
                         <>
@@ -382,6 +364,91 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                       )}
                     </Button>
                   )}
+
+                  {/* Secondary Actions */}
+                  <div className="flex gap-2">
+                    {currentStep > 1 && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={prevStep}
+                        className="flex-1 flex items-center justify-center gap-2"
+                      >
+                        <ArrowLeft className="w-4 h-4" />
+                        Previous
+                      </Button>
+                    )}
+
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      onClick={handleCancel}
+                      className="flex-1 flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400"
+                    >
+                      <X className="w-4 h-4" />
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Desktop Layout - Original horizontal layout */}
+                <div className="hidden sm:flex justify-between items-center">
+                  <div className="flex gap-3">
+                    {currentStep > 1 && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={prevStep}
+                        className="flex items-center gap-2"
+                      >
+                        <ArrowLeft className="w-4 h-4" />
+                        Previous
+                      </Button>
+                    )}
+
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      onClick={handleCancel}
+                      className="flex items-center gap-2 text-gray-600 dark:text-gray-400"
+                    >
+                      <X className="w-4 h-4" />
+                      Cancel
+                    </Button>
+                  </div>
+
+                  <div className="flex gap-3">
+                    {currentStep < STEPS.length && (
+                      <Button
+                        type="button"
+                        onClick={nextStep}
+                        className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white flex items-center gap-2"
+                      >
+                        Next
+                        <ArrowRight className="w-4 h-4" />
+                      </Button>
+                    )}
+
+                    {currentStep === STEPS.length && (
+                      <Button
+                        type="submit"
+                        disabled={isLoading}
+                        className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white flex items-center gap-2"
+                      >
+                        {isLoading ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            Saving...
+                          </>
+                        ) : (
+                          <>
+                            <Save className="w-4 h-4" />
+                            Save Manga
+                          </>
+                        )}
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
 
