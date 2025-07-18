@@ -460,18 +460,13 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
           type="submit"
           form={form.id}
           disabled={isLoading}
-          className="h-14 px-6 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-full flex items-center gap-3 font-medium"
+          className="w-16 h-16 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-full flex items-center justify-center"
+          title={isLoading ? "Saving..." : "Save Manga"}
         >
           {isLoading ? (
-            <>
-              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              <span>Saving...</span>
-            </>
+            <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
           ) : (
-            <>
-              <Save className="w-5 h-5" />
-              <span>Save</span>
-            </>
+            <Save className="w-6 h-6" />
           )}
         </Button>
       </div>
