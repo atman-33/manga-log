@@ -52,6 +52,42 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
         return false;
       }
     }
+
+    // Step 2 validation: Score must be within valid range if provided
+    if (currentStep === 2) {
+      const scoreValue = score.value;
+      if (scoreValue !== undefined && scoreValue !== null && scoreValue !== '') {
+        const numScore = Number(scoreValue);
+        if (isNaN(numScore) || numScore < 1 || numScore > 5) {
+          form.validate();
+          return false;
+        }
+      }
+    }
+
+    // Step 3 validation: Progress values must be positive integers if provided
+    if (currentStep === 3) {
+      const volumeValue = volume_progress.value;
+      const chapterValue = chapter_progress.value;
+
+      if (volumeValue !== undefined && volumeValue !== null && volumeValue !== '') {
+        const numVolume = Number(volumeValue);
+        if (isNaN(numVolume) || numVolume < 0 || !Number.isInteger(numVolume)) {
+          form.validate();
+          return false;
+        }
+      }
+
+      if (chapterValue !== undefined && chapterValue !== null && chapterValue !== '') {
+        const numChapter = Number(chapterValue);
+        if (isNaN(numChapter) || numChapter < 0 || !Number.isInteger(numChapter)) {
+          form.validate();
+          return false;
+        }
+      }
+    }
+
+    // Step 4 validation: No specific validation needed for notes
     return true;
   };
 
@@ -72,19 +108,18 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
   };
 
   const goToStep = (stepNumber: number) => {
-    // Allow going to previous steps without validation
-    if (stepNumber < currentStep) {
-      setCurrentStep(stepNumber);
+    // If clicking on the same step, do nothing
+    if (stepNumber === currentStep) {
       return;
     }
 
-    // For forward navigation, validate current step first
-    if (stepNumber > currentStep) {
-      if (!validateCurrentStep()) {
-        return;
-      }
-      setCurrentStep(stepNumber);
+    // Always validate current step before moving to any other step
+    if (!validateCurrentStep()) {
+      return;
     }
+
+    // Move to the selected step
+    setCurrentStep(stepNumber);
   };
 
   const handleCancel = () => {
@@ -132,13 +167,10 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
                     <button
                       type="button"
                       onClick={() => goToStep(step.id)}
-                      className={`group flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 cursor-pointer ${currentStep >= step.id
+                      className={`group flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 cursor-pointer ${currentStep === step.id
                         ? 'bg-gradient-to-r from-purple-600 to-blue-600 border-transparent text-white shadow-lg'
-                        : currentStep === step.id - 1
-                          ? 'border-purple-300 dark:border-purple-500 text-purple-600 dark:text-purple-400 hover:border-purple-500 dark:hover:border-purple-300'
-                          : 'border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500 hover:border-gray-400 dark:hover:border-gray-500'
+                        : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-purple-400 dark:hover:border-purple-500 hover:text-purple-600 dark:hover:text-purple-400'
                         }`}
-                      disabled={step.id > currentStep + 1}
                       title={`Go to ${step.title}`}
                     >
                       <step.icon className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 ${currentStep >= step.id ? '' : 'group-hover:scale-110'
