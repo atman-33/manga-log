@@ -14,5 +14,5 @@ export const siteConfig = {
     'collection',
   ],
   author: 'atman-33',
-  ogImage: '/og-image.png',
+  ogpImage: '/ogp-image.png',
 };

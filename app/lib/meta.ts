@@ -4,7 +4,7 @@ export interface MetaOptions {
   title?: string;
   description?: string;
   keywords?: string[];
-  ogImage?: string;
+  ogpImage?: string;
   noIndex?: boolean;
 }
 
@@ -13,14 +13,14 @@ export function generateMeta(options: MetaOptions = {}) {
     title,
     description = siteConfig.description,
     keywords = siteConfig.keywords,
-    ogImage = siteConfig.ogImage,
+    ogpImage = siteConfig.ogpImage,
     noIndex = false,
   } = options;
 
   const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name;
-  const fullOgImage = ogImage.startsWith('http')
-    ? ogImage
-    : `${siteConfig.appUrl}${ogImage}`;
+  const fullOgImage = ogpImage.startsWith('http')
+    ? ogpImage
+    : `${siteConfig.appUrl}${ogpImage}`;
 
   const meta = [
     { title: fullTitle },
