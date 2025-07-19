@@ -1,6 +1,7 @@
-import { BookOpen, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { Link } from "react-router";
 import { GitHubIcon, XIcon } from "~/components/icons";
+import { Logo } from "~/components/logo";
 import { siteConfig } from "~/config/site-config";
 
 interface FooterProps {
@@ -14,14 +15,7 @@ export function Footer({ contactEmail }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="col-span-1 md:col-span-2">
-            <Link to="/" className="flex items-center gap-2 group mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <BookOpen className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                MangaLog
-              </span>
-            </Link>
+            <Logo to="/" className="mb-4" />
             <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md">
               The ultimate platform for tracking and managing your manga reading experience. Keep track of what you've read and discover your next favorite series.
             </p>
