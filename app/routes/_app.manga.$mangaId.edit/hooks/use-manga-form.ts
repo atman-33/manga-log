@@ -9,6 +9,12 @@ type MangaLog = InferSelectModel<typeof mangaLogs>;
 const mangaLogSchema = z.object({
   id: z.string().uuid().optional(), // Add optional id field
   title: z.string().min(1, 'Title is required'),
+  thumbnail: z.preprocess((a) => {
+    if (a === undefined || a === '' || a === null) {
+      return null;
+    }
+    return z.string().parse(a);
+  }, z.string().url().nullable().optional()),
   score: z.preprocess(
     (a) => (a === undefined || a === '' ? 0 : parseFloat(z.string().parse(a))),
     z.number().min(0).max(5),
@@ -27,12 +33,6 @@ const mangaLogSchema = z.object({
     (a) => (a === undefined || a === '' ? '' : z.string().parse(a)),
     z.string().optional(),
   ),
-  thumbnail: z.preprocess((a) => {
-    if (a === undefined || a === '' || a === null) {
-      return null;
-    }
-    return z.string().parse(a);
-  }, z.string().url().nullable().optional()),
 });
 
 const useMangaForm = (defaultValues?: MangaLog) => {
