@@ -20,17 +20,26 @@ export function MangaCard({ log, onDelete }: MangaCardProps) {
   return (
     <div className="group relative bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 hover:border-purple-300 dark:hover:border-purple-600 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10 hover:-translate-y-1 overflow-hidden">
       {/* Thumbnail Section */}
-      {log.thumbnail && (
-        <div className="relative h-48 sm:h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
-          <img
-            src={log.thumbnail}
-            alt={`Cover of ${log.title}`}
-            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
-        </div>
-      )}
+      <div className="relative h-48 sm:h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
+        {log.thumbnail ? (
+          <>
+            <img
+              src={log.thumbnail}
+              alt={`Cover of ${log.title}`}
+              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+          </>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800">
+            <div className="text-center">
+              <BookOpen className="w-16 h-16 mx-auto text-gray-400 dark:text-gray-500 mb-2 group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors duration-300" />
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">No Cover</p>
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* Card Header */}
       <div className="p-6 pb-4">
