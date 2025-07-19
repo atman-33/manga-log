@@ -37,15 +37,7 @@ export function LandingHeader() {
             <Logo to="/" className="w-fit" />
           </div>
 
-          {/* Center: Navigation */}
-          <nav className="hidden md:flex items-center gap-8 flex-1 justify-center">
-            <Link to="#features" className="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-              Features
-            </Link>
-            <Link to="#about" className="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-              About
-            </Link>
-          </nav>
+
 
           {/* Right: Theme Toggle + Auth */}
           <div className="flex items-center gap-3 flex-1 justify-end">
