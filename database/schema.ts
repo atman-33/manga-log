@@ -4,6 +4,7 @@ import { account, session, user, verification } from './auth-schema';
 const mangaLogs = sqliteTable('manga_logs', {
   id: text('id').primaryKey().notNull(),
   title: text('title').notNull(),
+  thumbnail: text('thumbnail'), // Google Books API thumbnail URL
   score: real('score'),
   is_completed: integer('is_completed', { mode: 'boolean' })
     .notNull()

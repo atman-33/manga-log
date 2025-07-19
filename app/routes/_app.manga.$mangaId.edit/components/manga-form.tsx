@@ -8,6 +8,7 @@ import { useMangaForm } from '../hooks/use-manga-form';
 import { BasicInfoStep } from './basic-info-step';
 import { FloatingSaveButton } from './floating-save-button';
 import { FormHeader } from './form-header';
+import { MangaInfoHeader } from './manga-info-header';
 import { NavigationButtons } from './navigation-buttons';
 import { NotesStep } from './notes-step';
 import { ProgressStep } from './progress-step';
@@ -25,7 +26,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
   const fetcher = useFetcher();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-  const [form, { title, score, is_completed, volume_progress, chapter_progress, note }] = useMangaForm(defaultValues);
+  const [form, { title, score, is_completed, volume_progress, chapter_progress, note, thumbnail }] = useMangaForm(defaultValues);
 
   const validateCurrentStep = () => {
     // Step 1 validation: Title is required
@@ -134,11 +135,20 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
           <FormHeader isEditing={!!defaultValues} />
           <StepIndicator currentStep={currentStep} onStepClick={goToStep} />
 
+          {/* Manga Info Header - Always visible */}
+          <MangaInfoHeader
+            title={(title.value as string) || defaultValues?.title || ''}
+            thumbnail={(thumbnail.value as string) || defaultValues?.thumbnail || ''}
+            isEditing={!!defaultValues}
+          />
+
           {/* Form */}
           <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 p-8">
             <fetcher.Form {...getFormProps(form)} method='post'>
               <BasicInfoStep
                 titleField={title}
+                thumbnailField={thumbnail}
+                form={form}
                 isVisible={currentStep === 1}
               />
 

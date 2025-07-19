@@ -1,0 +1,1 @@
+ALTER TABLE `manga_logs` ADD `thumbnail` text;

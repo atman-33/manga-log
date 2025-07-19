@@ -33,6 +33,7 @@ export async function loader({ context, params }: Route.LoaderArgs) {
     columns: {
       id: true,
       title: true,
+      thumbnail: true,
       score: true,
       is_completed: true,
       volume_progress: true,
