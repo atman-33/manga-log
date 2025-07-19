@@ -38,6 +38,7 @@ export async function loader({ context, params }: Route.LoaderArgs) {
       volume_progress: true,
       chapter_progress: true,
       note: true,
+      thumbnail: true,
       user_id: true,
       created_at: true,
       updated_at: true

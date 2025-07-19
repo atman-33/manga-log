@@ -25,7 +25,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
   const fetcher = useFetcher();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-  const [form, { title, score, is_completed, volume_progress, chapter_progress, note }] = useMangaForm(defaultValues);
+  const [form, { title, score, is_completed, volume_progress, chapter_progress, note, thumbnail }] = useMangaForm(defaultValues);
 
   const validateCurrentStep = () => {
     // Step 1 validation: Title is required
@@ -139,6 +139,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
             <fetcher.Form {...getFormProps(form)} method='post'>
               <BasicInfoStep
                 titleField={title}
+                thumbnailField={thumbnail}
                 isVisible={currentStep === 1}
               />
 

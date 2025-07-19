@@ -11,6 +11,7 @@ const mangaLogs = sqliteTable('manga_logs', {
   volume_progress: integer('volume_progress'),
   chapter_progress: real('chapter_progress'),
   note: text('note'),
+  thumbnail: text('thumbnail'), // Google Books API thumbnail URL
   user_id: text('user_id').references(() => user.id),
   created_at: text('created_at'),
   updated_at: text('updated_at'),

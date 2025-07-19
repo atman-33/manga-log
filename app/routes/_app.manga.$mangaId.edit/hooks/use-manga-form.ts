@@ -27,6 +27,10 @@ const mangaLogSchema = z.object({
     (a) => (a === undefined || a === '' ? '' : z.string().parse(a)),
     z.string().optional(),
   ),
+  thumbnail: z.preprocess(
+    (a) => (a === undefined || a === '' ? null : z.string().parse(a)),
+    z.string().url().nullable().optional(),
+  ),
 });
 
 const useMangaForm = (defaultValues?: MangaLog) => {
@@ -40,6 +44,7 @@ const useMangaForm = (defaultValues?: MangaLog) => {
           volume_progress: defaultValues.volume_progress?.toString(),
           chapter_progress: defaultValues.chapter_progress?.toString(),
           note: defaultValues.note || '',
+          thumbnail: defaultValues.thumbnail || '',
         }
       : undefined,
     onValidate({ formData }) {

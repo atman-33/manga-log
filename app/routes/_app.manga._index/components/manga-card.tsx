@@ -17,6 +17,19 @@ export function MangaCard({ log, onDelete }: MangaCardProps) {
 
   return (
     <div className="group relative bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 hover:border-purple-300 dark:hover:border-purple-600 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10 hover:-translate-y-1 overflow-hidden">
+      {/* Thumbnail Section */}
+      {log.thumbnail && (
+        <div className="relative h-48 overflow-hidden">
+          <img
+            src={log.thumbnail}
+            alt={`Cover of ${log.title}`}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+        </div>
+      )}
+
       {/* Card Header */}
       <div className="p-6 pb-4">
         <div className="flex items-start justify-between mb-3">
@@ -24,7 +37,7 @@ export function MangaCard({ log, onDelete }: MangaCardProps) {
             to={`/manga/${log.id}/edit`}
             className="flex-1 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors"
           >
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-2 mb-2">
+            <h3 className={`text-xl font-bold text-gray-900 dark:text-white line-clamp-2 mb-2 ${!log.thumbnail ? 'mt-0' : ''}`}>
               {log.title}
             </h3>
           </Link>
