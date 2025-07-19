@@ -56,7 +56,7 @@
         "id": 5,
         "title": "Manga Log Form (Add/Edit) UI",
         "description": "Create the user interface for adding new manga logs and editing existing ones, including all required fields and basic client-side validation.",
-        "details": "Design a modal or dedicated page with a form for Title (text, required), Score (1.0-5.0, optional), Status (boolean), Volume Progress (integer, optional), Chapter Progress (integer, optional), Note (text, optional). Include Save/Cancel buttons and implement client-side validation for required fields.",
+        "details": "Design a modal or dedicated page with a form for Title (text, required), Score (0.0-5.0, optional), Status (boolean), Volume Progress (integer, optional), Chapter Progress (integer, optional), Note (text, optional). Include Save/Cancel buttons and implement client-side validation for required fields.",
         "testStrategy": "Test form rendering, input types, and client-side validation messages for required fields. Verify Save/Cancel button functionality.",
         "priority": "medium",
         "dependencies": [

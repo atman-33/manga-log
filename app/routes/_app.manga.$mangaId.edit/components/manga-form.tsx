@@ -42,7 +42,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
       const scoreValue = score.value;
       if (scoreValue !== undefined && scoreValue !== null && scoreValue !== '') {
         const numScore = Number(scoreValue);
-        if (isNaN(numScore) || numScore < 1 || numScore > 5) {
+        if (isNaN(numScore) || numScore < 0 || numScore > 5) {
           form.validate();
           return false;
         }
@@ -64,7 +64,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
 
       if (chapterValue !== undefined && chapterValue !== null && chapterValue !== '') {
         const numChapter = Number(chapterValue);
-        if (isNaN(numChapter) || numChapter < 0 || !Number.isInteger(numChapter)) {
+        if (isNaN(numChapter) || numChapter < 0) {
           form.validate();
           return false;
         }

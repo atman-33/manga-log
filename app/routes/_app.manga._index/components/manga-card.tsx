@@ -4,7 +4,7 @@ import { Form, Link } from 'react-router';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
 import { Progress } from '~/components/ui/progress';
-import { StarRating } from '~/components/ui/star-rating';
+import { StarRating } from '~/components/star-rating';
 import type { mangaLogs } from '~/database/schema';
 
 interface MangaCardProps {
@@ -68,11 +68,9 @@ export function MangaCard({ log, onDelete }: MangaCardProps) {
             {log.is_completed ? "Completed" : "In Progress"}
           </Badge>
 
-          {log.score && (
-            <div className="flex items-center gap-1">
-              <StarRating rating={log.score} size="sm" showValue />
-            </div>
-          )}
+          <div className="flex items-center gap-1">
+            <StarRating rating={log.score} size="sm" showValue />
+          </div>
         </div>
 
         {/* Progress Section */}

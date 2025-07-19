@@ -20,9 +20,8 @@ const mangaLogSchema = z.object({
     z.number().int().min(0),
   ),
   chapter_progress: z.preprocess(
-    (a) =>
-      a === undefined || a === '' ? 0 : parseInt(z.string().parse(a), 10),
-    z.number().int().min(0),
+    (a) => (a === undefined || a === '' ? 0 : parseFloat(z.string().parse(a))),
+    z.number().min(0),
   ),
   note: z.preprocess(
     (a) => (a === undefined || a === '' ? '' : z.string().parse(a)),
