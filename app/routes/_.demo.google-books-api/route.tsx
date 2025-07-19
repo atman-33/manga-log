@@ -8,6 +8,7 @@ interface GoogleBook {
   volumeInfo: {
     title: string;
     authors?: string[];
+    categories?: string[];
     imageLinks?: {
       thumbnail?: string;
       smallThumbnail?: string;
@@ -50,10 +51,19 @@ export default function GoogleBooksApiDemo() {
       }
 
       const data: GoogleBooksResponse = await response.json();
-      setBooks(data.items || []);
 
-      if (!data.items || data.items.length === 0) {
-        setError('No books found for your search term');
+      // Filter for Comics & Graphic Novels category only
+      const comicsAndGraphicNovels = (data.items || []).filter(book =>
+        book.volumeInfo.categories?.some(category =>
+          category.toLowerCase().includes('comics') ||
+          category.toLowerCase().includes('graphic novels')
+        )
+      );
+
+      setBooks(comicsAndGraphicNovels);
+
+      if (comicsAndGraphicNovels.length === 0) {
+        setError('No manga or comics found for your search term');
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred while searching');
@@ -73,7 +83,8 @@ export default function GoogleBooksApiDemo() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Google Books API Demo</h1>
         <p className="text-muted-foreground">
-          Test the Google Books API to see what manga and book data can be retrieved.
+          Test the Google Books API to see what manga and comic data can be retrieved.
+          Results are filtered to show only "Comics & Graphic Novels" category.
           Try searching for manga titles like "One Piece", "Naruto", or "Attack on Titan".
         </p>
       </div>
@@ -91,7 +102,7 @@ export default function GoogleBooksApiDemo() {
               placeholder="Enter book or manga title..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyPress={handleKeyPress}
+              onKeyDown={handleKeyPress}
               disabled={isLoading}
               className="w-full"
             />
