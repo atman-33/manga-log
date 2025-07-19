@@ -19,14 +19,14 @@ export function MangaCard({ log, onDelete }: MangaCardProps) {
     <div className="group relative bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 hover:border-purple-300 dark:hover:border-purple-600 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10 hover:-translate-y-1 overflow-hidden">
       {/* Thumbnail Section */}
       {log.thumbnail && (
-        <div className="relative h-48 overflow-hidden">
+        <div className="relative h-48 sm:h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
           <img
             src={log.thumbnail}
             alt={`Cover of ${log.title}`}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
         </div>
       )}
 
