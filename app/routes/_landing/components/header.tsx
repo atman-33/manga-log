@@ -1,7 +1,7 @@
-import { BookOpen } from "lucide-react";
 import { Link, useNavigate, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { ThemeToggle } from "~/components/theme-toggle";
+import { Logo } from "~/components/logo";
 import { getAuthClient } from "~/lib/auth/auth-client";
 
 export function LandingHeader() {
@@ -33,14 +33,7 @@ export function LandingHeader() {
         <div className="flex items-center justify-between">
           {/* Left: Logo */}
           <div className="flex-1">
-            <Link to="/" className="flex items-center gap-2 group w-fit">
-              <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <BookOpen className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                MangaLog
-              </span>
-            </Link>
+            <Logo to="/" className="w-fit" />
           </div>
 
           {/* Center: Navigation */}
