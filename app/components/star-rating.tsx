@@ -2,7 +2,7 @@ import { Star } from "lucide-react";
 import { cn } from "~/lib/utils";
 
 interface StarRatingProps {
-  rating: number;
+  rating: number | null | undefined;
   maxRating?: number;
   size?: "sm" | "md" | "lg";
   className?: string;
@@ -22,11 +22,14 @@ export function StarRating({
     lg: "w-5 h-5"
   };
 
+  // Handle null/undefined rating values
+  const normalizedRating = rating ?? 0;
+
   const stars = Array.from({ length: maxRating }, (_, index) => {
     const starValue = index + 1;
-    const isFilled = starValue <= rating;
-    const isPartial = starValue > rating && starValue - 1 < rating;
-    const fillPercentage = isPartial ? ((rating % 1) * 100) : 0;
+    const isFilled = starValue <= normalizedRating;
+    const isPartial = starValue > normalizedRating && starValue - 1 < normalizedRating;
+    const fillPercentage = isPartial ? ((normalizedRating % 1) * 100) : 0;
 
     return (
       <div key={index} className="relative">
@@ -62,7 +65,7 @@ export function StarRating({
       </div>
       {showValue && (
         <span className="text-sm text-gray-600 dark:text-gray-400 ml-1">
-          {rating.toFixed(1)}
+          {rating ? rating.toFixed(1) : '0.0'}
         </span>
       )}
     </div>

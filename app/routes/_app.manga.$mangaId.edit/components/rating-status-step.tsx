@@ -3,7 +3,7 @@ import type { InferSelectModel } from 'drizzle-orm';
 import { ConformInput } from '~/components/conform/conform-input';
 import { ConformSwitch } from '~/components/conform/conform-switch';
 import { Label } from '~/components/ui/label';
-import { StarRating } from '~/components/ui/star-rating';
+import { StarRating } from '~/components/star-rating';
 import type { mangaLogs } from '~/database/schema';
 
 type MangaLog = InferSelectModel<typeof mangaLogs>;
@@ -34,17 +34,15 @@ export function RatingStatusStep({
             id="score"
             name="score"
             step="0.1"
-            min="1"
+            min="0"
             max="5"
-            placeholder="Rate from 1.0 to 5.0"
+            placeholder="Rate from 0.0 to 5.0 (optional)"
             className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50"
           />
-          {defaultValues?.score && (
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600 dark:text-gray-400">Current rating:</span>
-              <StarRating rating={defaultValues.score} showValue />
-            </div>
-          )}
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600 dark:text-gray-400">Current rating:</span>
+            <StarRating rating={defaultValues?.score} showValue />
+          </div>
         </div>
       </div>
 
