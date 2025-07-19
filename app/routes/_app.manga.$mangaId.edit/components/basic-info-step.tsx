@@ -1,38 +1,46 @@
-import type { FieldMetadata } from '@conform-to/react';
+import type { FieldMetadata, FormMetadata } from '@conform-to/react';
 import { useState } from 'react';
+import { X } from 'lucide-react';
 import { ConformInput } from '~/components/conform/conform-input';
 import { Label } from '~/components/ui/label';
+import { Button } from '~/components/ui/button';
 import { GoogleBooksSearch } from './google-books-search';
 
 interface BasicInfoStepProps {
   titleField: FieldMetadata<unknown>;
   thumbnailField: FieldMetadata<unknown>;
+  form: FormMetadata<any>;
   isVisible: boolean;
 }
 
-export function BasicInfoStep({ titleField, thumbnailField, isVisible }: BasicInfoStepProps) {
+export function BasicInfoStep({ titleField, thumbnailField, form, isVisible }: BasicInfoStepProps) {
   const [selectedThumbnail, setSelectedThumbnail] = useState<string | null>(
     (thumbnailField.initialValue as string) || null
   );
 
   const handleSelectBook = (title: string, thumbnail?: string) => {
-    // Update the title field value
-    const titleInput = document.getElementById('title') as HTMLInputElement;
-    if (titleInput) {
-      titleInput.value = title;
-      titleInput.dispatchEvent(new Event('input', { bubbles: true }));
-      titleInput.dispatchEvent(new Event('change', { bubbles: true }));
-    }
+    // Update form fields using Conform's update method
+    form.update({
+      name: titleField.name,
+      value: title,
+    });
 
-    // Update the thumbnail field value
-    const thumbnailInput = document.getElementById('thumbnail') as HTMLInputElement;
-    if (thumbnailInput) {
-      thumbnailInput.value = thumbnail || '';
-      thumbnailInput.dispatchEvent(new Event('input', { bubbles: true }));
-      thumbnailInput.dispatchEvent(new Event('change', { bubbles: true }));
-    }
+    form.update({
+      name: thumbnailField.name,
+      value: thumbnail || '',
+    });
 
     setSelectedThumbnail(thumbnail || null);
+  };
+
+  const handleRemoveThumbnail = () => {
+    // Clear the thumbnail field using Conform's update method
+    form.update({
+      name: thumbnailField.name,
+      value: '',
+    });
+
+    setSelectedThumbnail(null);
   };
 
   return (
@@ -62,7 +70,7 @@ export function BasicInfoStep({ titleField, thumbnailField, isVisible }: BasicIn
 
       {/* Selected Thumbnail Preview */}
       {selectedThumbnail && (
-        <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+        <div className="relative flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
           <img
             src={selectedThumbnail}
             alt="Selected manga cover"
@@ -76,6 +84,16 @@ export function BasicInfoStep({ titleField, thumbnailField, isVisible }: BasicIn
               This will be used as the manga thumbnail
             </p>
           </div>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={handleRemoveThumbnail}
+            className="absolute top-2 right-2 h-6 w-6 rounded-full bg-red-100 hover:bg-red-200 dark:bg-red-900/50 dark:hover:bg-red-900/70 text-red-600 dark:text-red-400"
+            title="Remove cover image"
+          >
+            <X className="h-3 w-3" />
+          </Button>
         </div>
       )}
 

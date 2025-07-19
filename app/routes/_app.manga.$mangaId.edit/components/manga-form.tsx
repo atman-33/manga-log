@@ -140,6 +140,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
               <BasicInfoStep
                 titleField={title}
                 thumbnailField={thumbnail}
+                form={form}
                 isVisible={currentStep === 1}
               />
 
