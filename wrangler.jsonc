@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "react-router-app",
+  "name": "manga-log",
   "compatibility_date": "2025-04-04",
   "compatibility_flags": [
     "nodejs_compat"
@@ -17,11 +17,17 @@
     "OAUTH_GOOGLE_CLIENT_SECRET": "",
     "CONTACT_EMAIL": ""
   },
+  "routes": [
+    {
+      "pattern": "mangalogs.com",
+      "custom_domain": true
+    }
+  ],
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "d1-app-test-db",
-      "database_id": "1b05145e-904f-4c9b-9234-9450cd66eb02",
+      "database_name": "manga-log-db",
+      "database_id": "4dc06148-3813-4a37-bf21-5b0629dd663b",
       "migrations_dir": "drizzle"
     }
   ]
