@@ -8,6 +8,7 @@ import { useMangaForm } from '../hooks/use-manga-form';
 import { BasicInfoStep } from './basic-info-step';
 import { FloatingSaveButton } from './floating-save-button';
 import { FormHeader } from './form-header';
+import { MangaInfoHeader } from './manga-info-header';
 import { NavigationButtons } from './navigation-buttons';
 import { NotesStep } from './notes-step';
 import { ProgressStep } from './progress-step';
@@ -133,6 +134,13 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
         <div className="max-w-4xl mx-auto">
           <FormHeader isEditing={!!defaultValues} />
           <StepIndicator currentStep={currentStep} onStepClick={goToStep} />
+
+          {/* Manga Info Header - Always visible */}
+          <MangaInfoHeader
+            title={(title.value as string) || defaultValues?.title || ''}
+            thumbnail={(thumbnail.value as string) || defaultValues?.thumbnail || ''}
+            isEditing={!!defaultValues}
+          />
 
           {/* Form */}
           <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 p-8">

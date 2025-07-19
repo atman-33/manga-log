@@ -61,12 +61,14 @@ export function BasicInfoStep({ titleField, thumbnailField, form, isVisible }: B
       </div>
 
       {/* Hidden Thumbnail Field */}
-      <ConformInput
-        metadata={thumbnailField}
-        type="hidden"
-        id="thumbnail"
-        name="thumbnail"
-      />
+      <div className='hidden'>
+        <ConformInput
+          metadata={thumbnailField}
+          type="hidden"
+          id="thumbnail"
+          name="thumbnail"
+        />
+      </div>
 
       {/* Selected Thumbnail Preview */}
       {selectedThumbnail && (
