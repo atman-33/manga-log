@@ -1,5 +1,6 @@
-import { BookOpen, Github, Mail, Twitter } from "lucide-react";
+import { BookOpen, Mail } from "lucide-react";
 import { Link } from "react-router";
+import { GitHubIcon, XIcon } from "~/components/icons";
 
 export function LandingFooter() {
   return (
@@ -25,14 +26,14 @@ export function LandingFooter() {
                 className="w-10 h-10 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors border border-gray-200 dark:border-gray-700"
                 aria-label="GitHub"
               >
-                <Github className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                <GitHubIcon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
               </a>
               <a
-                href="https://twitter.com"
+                href="https://x.com"
                 className="w-10 h-10 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors border border-gray-200 dark:border-gray-700"
-                aria-label="Twitter"
+                aria-label="X"
               >
-                <Twitter className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                <XIcon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
               </a>
               <a
                 href="mailto:contact@mangalog.com"
