@@ -18,19 +18,28 @@ MangaLog is a personal manga library application that helps you:
 
 ### Core Functionality
 - 📚 **Personal Manga Library**: Add, edit, and delete manga entries
-- 📊 **Progress Tracking**: Track volume and chapter progress
-- ⭐ **Rating System**: Score manga from 0.0 to 5.0 stars
+- 📊 **Progress Tracking**: Track volume and chapter progress with visual progress bars
+- ⭐ **Rating System**: Score manga from 0.0 to 5.0 stars with visual star ratings
 - 📝 **Personal Notes**: Add custom notes for each manga
 - ✅ **Completion Status**: Mark series as completed or ongoing
-- 🔍 **Search & Filter**: Find manga by title
-- 🔄 **Smart Sorting**: Sort by date updated, score, or title
+- 🔍 **Advanced Search & Filter**: Find manga by title and filter by completion status
+- 🔄 **Smart Sorting**: Sort by date updated, score, or title alphabetically
+- 📈 **Collection Statistics**: View total manga, completed series, in-progress titles, and average score
+- 🏆 **Reading Achievements**: Progress badges based on volume milestones (Quick Reader → Manga Master)
+
+### Google Books Integration
+- 🔍 **Auto-Complete Search**: Search Google Books API for manga titles
+- 🖼️ **Cover Image Support**: Automatically fetch and display manga cover thumbnails
+- 📖 **Smart Filtering**: Results filtered to show only Comics & Graphic Novels category
+- ⚡ **One-Click Import**: Select from search results to auto-fill title and cover image
 
 ### Technical Features
 - 🚀 **Server-Side Rendering**: Fast initial page loads
-- 📱 **Responsive Design**: Works on mobile and desktop
+- 📱 **Responsive Design**: Works on mobile and desktop with optimized layouts
 - 🔐 **Google OAuth**: Secure authentication
 - ⚡ **Edge Computing**: Powered by Cloudflare Workers
 - 🎨 **Modern UI**: Built with Tailwind CSS and shadcn/ui components
+- 🌙 **Dark Mode Support**: Automatic theme switching with next-themes
 
 ## Tech Stack
 
@@ -218,16 +227,24 @@ Key authentication files:
 The MangaLog database includes:
 
 ### manga_logs table
-- `id`: Primary key
+- `id`: Primary key (text)
 - `title`: Manga title (required)
-- `score`: Rating from 1-5 (optional)
-- `is_completed`: Completion status (boolean)
-- `volume_progress`: Last volume read (optional)
-- `chapter_progress`: Last chapter read, supports decimals (optional)
-- `note`: Personal notes (optional)
-- `user_id`: Foreign key to user
-- `created_at`: Creation timestamp
-- `updated_at`: Last update timestamp
+- `thumbnail`: Cover image URL from Google Books API (optional, text)
+- `score`: Rating from 1.0-5.0 (optional, real number)
+- `is_completed`: Completion status (boolean, defaults to false)
+- `volume_progress`: Last volume read (optional, integer)
+- `chapter_progress`: Last chapter read, supports decimals (optional, real number)
+- `note`: Personal notes (optional, text)
+- `user_id`: Foreign key to user (text)
+- `created_at`: Creation timestamp (text)
+- `updated_at`: Last update timestamp (text)
+
+### Authentication Tables
+The application uses better-auth which automatically manages:
+- `user`: User profiles and Google OAuth data
+- `session`: Active user sessions
+- `account`: OAuth account linking
+- `verification`: Email verification tokens
 
 ## Contributing
 
