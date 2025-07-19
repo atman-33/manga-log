@@ -66,7 +66,10 @@ export async function action({ request, context, params }: Route.ActionArgs) {
     };
   }
 
-  const validatedData = submission.value;
+  const validatedData = {
+    ...submission.value,
+    note: submission.value.note ?? '',
+  };
 
   try {
     const existingLog = await context.db.query.mangaLogs.findFirst({

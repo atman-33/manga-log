@@ -10,27 +10,24 @@ const mangaLogSchema = z.object({
   id: z.string().uuid().optional(), // Add optional id field
   title: z.string().min(1, 'Title is required'),
   score: z.preprocess(
-    (a) =>
-      a === undefined || a === '' ? undefined : parseFloat(z.string().parse(a)),
-    z.number().min(1).max(5).optional(),
+    (a) => (a === undefined || a === '' ? 0 : parseFloat(z.string().parse(a))),
+    z.number().min(0).max(5),
   ),
   is_completed: z.preprocess((a) => a === 'true' || a === true, z.boolean()),
   volume_progress: z.preprocess(
     (a) =>
-      a === undefined || a === ''
-        ? undefined
-        : parseInt(z.string().parse(a), 10),
-    z.number().int().min(0).optional(),
+      a === undefined || a === '' ? 0 : parseInt(z.string().parse(a), 10),
+    z.number().int().min(0),
   ),
-
   chapter_progress: z.preprocess(
     (a) =>
-      a === undefined || a === ''
-        ? undefined
-        : parseInt(z.string().parse(a), 10),
-    z.number().int().min(0).optional(),
+      a === undefined || a === '' ? 0 : parseInt(z.string().parse(a), 10),
+    z.number().int().min(0),
   ),
-  note: z.string().optional(),
+  note: z.preprocess(
+    (a) => (a === undefined || a === '' ? '' : z.string().parse(a)),
+    z.string().optional(),
+  ),
 });
 
 const useMangaForm = (defaultValues?: MangaLog) => {
