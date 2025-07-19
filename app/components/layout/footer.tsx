@@ -50,32 +50,10 @@ export function Footer({ contactEmail }: FooterProps) {
             </div>
           </div>
 
-          {/* Product Links */}
+          {/* Legal Links */}
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Product</h3>
+            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Legal</h3>
             <ul className="space-y-3">
-              <li>
-                <Link to="#features" className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link to="#about" className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-                  About
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Support Links */}
-          <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Support</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link to="/help" className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-                  Help
-                </Link>
-              </li>
               <li>
                 <Link to="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                   Privacy Policy
@@ -88,6 +66,9 @@ export function Footer({ contactEmail }: FooterProps) {
               </li>
             </ul>
           </div>
+
+          {/* Empty column for spacing */}
+          <div></div>
         </div>
 
         {/* Copyright */}
