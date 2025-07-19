@@ -9,7 +9,7 @@ const mangaLogs = sqliteTable('manga_logs', {
     .notNull()
     .default(false),
   volume_progress: integer('volume_progress'),
-  chapter_progress: integer('chapter_progress'),
+  chapter_progress: real('chapter_progress'),
   note: text('note'),
   user_id: text('user_id').references(() => user.id),
   created_at: text('created_at'),

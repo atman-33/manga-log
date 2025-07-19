@@ -37,9 +37,10 @@ export function ProgressStep({
           <ConformInput
             metadata={chapterProgressField}
             type="number"
+            step="0.1"
             id="chapter_progress"
             name="chapter_progress"
-            placeholder="Last chapter read"
+            placeholder="Last chapter read (e.g., 15.5)"
             className="w-full text-lg p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-purple-500 dark:focus:border-purple-400 transition-colors bg-white/50 dark:bg-gray-700/50"
           />
         </div>
@@ -49,6 +50,7 @@ export function ProgressStep({
         <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Progress Tracking Tips:</h3>
         <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
           <li>• Track either volumes, chapters, or both</li>
+          <li>• Chapter progress supports decimals (e.g., 15.5 for halfway through chapter 15)</li>
           <li>• Leave blank if you're not sure about your progress</li>
           <li>• You can update this anytime as you read</li>
         </ul>

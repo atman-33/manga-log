@@ -10,7 +10,7 @@ A modern web application for tracking your manga reading progress. Built with Re
 
 MangaLog is a personal manga library application that helps you:
 - **Track Reading Progress**: Log volumes and chapters you've read
-- **Rate & Review**: Score manga from 1-5 stars and add personal notes
+- **Rate & Review**: Score manga from 0-5 stars and add personal notes
 - **Organize Collection**: Search, sort, and manage your manga library
 - **Mark Completion**: Track which series you've finished reading
 
@@ -19,7 +19,7 @@ MangaLog is a personal manga library application that helps you:
 ### Core Functionality
 - 📚 **Personal Manga Library**: Add, edit, and delete manga entries
 - 📊 **Progress Tracking**: Track volume and chapter progress
-- ⭐ **Rating System**: Score manga from 1.0 to 5.0 stars
+- ⭐ **Rating System**: Score manga from 0.0 to 5.0 stars
 - 📝 **Personal Notes**: Add custom notes for each manga
 - ✅ **Completion Status**: Mark series as completed or ongoing
 - 🔍 **Search & Filter**: Find manga by title
@@ -223,7 +223,7 @@ The MangaLog database includes:
 - `score`: Rating from 1-5 (optional)
 - `is_completed`: Completion status (boolean)
 - `volume_progress`: Last volume read (optional)
-- `chapter_progress`: Last chapter read (optional)
+- `chapter_progress`: Last chapter read, supports decimals (optional)
 - `note`: Personal notes (optional)
 - `user_id`: Foreign key to user
 - `created_at`: Creation timestamp
