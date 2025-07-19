@@ -50,6 +50,13 @@
       "when": 1752678385985,
       "tag": "0006_many_bloodaxe",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1752919769474,
+      "tag": "0007_needy_guardsmen",
+      "breakpoints": true
     }
   ]
 }

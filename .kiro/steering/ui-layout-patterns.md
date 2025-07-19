@@ -35,7 +35,7 @@ This is the primary page after login, displaying the user's manga collection.
 - **Modal vs Page**: Can be implemented as modal overlay or dedicated page
 - **Form Fields** (based on domain model):
   - Title (required, text input)
-  - Score (optional, number input or slider, 1.0-5.0)
+  - Score (optional, number input or slider, 0.0-5.0)
   - Is Completed (optional, toggle/checkbox)
   - Progress Volume (optional, number input)
   - Progress Chapter (optional, number input)
