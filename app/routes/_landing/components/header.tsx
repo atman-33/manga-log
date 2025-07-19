@@ -2,6 +2,7 @@ import { Link, useNavigate, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { ThemeToggle } from "~/components/theme-toggle";
 import { Logo } from "~/components/logo";
+import { UserAvatar } from "~/components/user-avatar";
 import { getAuthClient } from "~/lib/auth/auth-client";
 
 export function LandingHeader() {
@@ -9,7 +10,7 @@ export function LandingHeader() {
   // Attempt to get user data from the root loader, if available.
   // This is a fallback and might not always be present on the landing route.
   const rootData = useRouteLoaderData("root") as {
-    user: { name: string; };
+    user: { name: string; image?: string | null; };
     baseURL: string;
   } | undefined;
 
@@ -50,11 +51,15 @@ export function LandingHeader() {
           <div className="flex items-center gap-3 flex-1 justify-end">
             <ThemeToggle />
             {rootData?.user ? (
-              <div className="flex items-center gap-4">
-                <span className="text-gray-700 dark:text-gray-300 hidden sm:block">{rootData.user.name}</span>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <UserAvatar user={rootData.user} size="sm" />
+                  <span className="text-gray-700 dark:text-gray-300 hidden sm:block text-sm font-medium">{rootData.user.name}</span>
+                </div>
                 <Button
                   onClick={() => signOut()}
                   variant="outline"
+                  size="sm"
                   className="border-purple-200 dark:border-purple-700 hover:bg-purple-50 dark:hover:bg-purple-900/20"
                 >
                   Logout
