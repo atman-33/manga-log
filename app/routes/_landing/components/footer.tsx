@@ -1,5 +1,9 @@
 import { Footer } from "~/components/layout/footer";
 
-export function LandingFooter() {
-  return <Footer />;
+interface LandingFooterProps {
+  contactEmail?: string;
+}
+
+export function LandingFooter({ contactEmail }: LandingFooterProps) {
+  return <Footer contactEmail={contactEmail} />;
 }

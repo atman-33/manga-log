@@ -1,8 +1,13 @@
 import { BookOpen, Mail } from "lucide-react";
 import { Link } from "react-router";
 import { GitHubIcon, XIcon } from "~/components/icons";
+import { siteConfig } from "~/config/site-config";
 
-export function Footer() {
+interface FooterProps {
+  contactEmail?: string;
+}
+
+export function Footer({ contactEmail }: FooterProps) {
   return (
     <footer className="bg-gray-50 dark:bg-gray-900 border-t border-gray-200/50 dark:border-gray-700/50">
       <div className="container mx-auto px-4 py-12">
@@ -22,26 +27,32 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-4">
               <a
-                href="https://github.com"
+                href={siteConfig.githubUrl}
                 className="w-10 h-10 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors border border-gray-200 dark:border-gray-700"
                 aria-label="GitHub"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <GitHubIcon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
               </a>
               <a
-                href="https://x.com"
+                href={siteConfig.xUrl}
                 className="w-10 h-10 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors border border-gray-200 dark:border-gray-700"
                 aria-label="X"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <XIcon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
               </a>
-              <a
-                href="mailto:contact@mangalog.com"
-                className="w-10 h-10 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors border border-gray-200 dark:border-gray-700"
-                aria-label="Email"
-              >
-                <Mail className="w-5 h-5 text-gray-600 dark:text-gray-400" />
-              </a>
+              {contactEmail && (
+                <a
+                  href={`mailto:${contactEmail}`}
+                  className="w-10 h-10 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors border border-gray-200 dark:border-gray-700"
+                  aria-label="Email"
+                >
+                  <Mail className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                </a>
+              )}
             </div>
           </div>
 
