@@ -6,6 +6,7 @@ import { Button } from '~/components/ui/button';
 import { Progress } from '~/components/ui/progress';
 import { StarRating } from '~/components/star-rating';
 import type { mangaLogs } from '~/database/schema';
+import { getVolumeProgress, getReadingAchievement } from '~/lib/volume-progress';
 
 interface MangaCardProps {
   log: InferSelectModel<typeof mangaLogs>;
@@ -13,7 +14,8 @@ interface MangaCardProps {
 }
 
 export function MangaCard({ log, onDelete }: MangaCardProps) {
-  const progressPercentage = log.volume_progress ? Math.min((log.volume_progress / 50) * 100, 100) : 0;
+  const volumeProgress = getVolumeProgress(log.volume_progress);
+  const achievement = getReadingAchievement(log.volume_progress);
 
   return (
     <div className="group relative bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 hover:border-purple-300 dark:hover:border-purple-600 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10 hover:-translate-y-1 overflow-hidden">
@@ -87,28 +89,33 @@ export function MangaCard({ log, onDelete }: MangaCardProps) {
         </div>
 
         {/* Progress Section */}
-        {(log.volume_progress || log.chapter_progress) && (
-          <div className="space-y-2 mb-4">
-            {log.volume_progress && (
-              <div>
-                <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
-                  <span>Volume Progress</span>
-                  <span>{log.volume_progress}</span>
-                </div>
-                <Progress value={progressPercentage} className="h-2" />
-              </div>
-            )}
-
-            {log.chapter_progress && (
-              <div className="text-sm text-gray-600 dark:text-gray-400">
-                <span className="flex items-center gap-1">
-                  <BookOpen className="w-3 h-3" />
-                  Chapter {log.chapter_progress}
+        <div className="space-y-3 mb-4">
+          <div className="space-y-2">
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-gray-600 dark:text-gray-400">{volumeProgress.volumeText}</span>
+              <div className="flex items-center gap-1">
+                <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                  {volumeProgress.label}
                 </span>
+                <span className="text-xs">{achievement.emoji}</span>
               </div>
-            )}
+            </div>
+
+            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div
+                className={`h-2 rounded-full transition-all duration-300 ${volumeProgress.color}`}
+                style={{ width: `${volumeProgress.percentage}%` }}
+              />
+            </div>
           </div>
-        )}
+
+          <div className="text-sm text-gray-600 dark:text-gray-400">
+            <span className="flex items-center gap-1">
+              <BookOpen className="w-3 h-3" />
+              Chapter {log.chapter_progress}
+            </span>
+          </div>
+        </div>
 
         {/* Note Preview */}
         {log.note && (
