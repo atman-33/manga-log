@@ -2,7 +2,7 @@ export const siteConfig = {
   name: 'MangaLog',
   description:
     'Track your manga reading progress with beautiful organization and personal insights',
-  appUrl: 'https://manga-log-dummy.com',
+  appUrl: 'https://mangalogs.com',
   xUrl: 'https://x.com/atman_33',
   githubUrl: 'https://github.com/atman-33',
   keywords: [
