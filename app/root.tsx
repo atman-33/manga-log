@@ -13,6 +13,7 @@ import { CustomToaster } from './components/custom-sonner';
 import { ReactCallRoots } from './components/react-call';
 import { ThemeProvider } from './components/theme-provider';
 import { getAuth } from './lib/auth/auth.server';
+import { AdScripts } from './components/ad-scripts';
 
 export const links: Route.LinksFunction = () => [
 	{ rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -65,6 +66,7 @@ export function Layout({ children }: { children: React.ReactNode; }) {
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<AdScripts />
 				<Meta />
 				<Links />
 			</head>
