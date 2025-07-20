@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
-import { KeyboardShortcutsHelp } from '~/components/keyboard-shortcuts-help';
 import { AlertDialog } from '~/components/react-call/alert-dialog';
 import { getAuth } from '~/lib/auth/auth.server';
 import { generateMeta } from '~/lib/meta';
 import type { Route } from './+types/route';
+import { FloatingAddButton } from './components/floating-add-button';
 import { MangaGrid } from './components/manga-grid';
 import { PageHeader } from './components/page-header';
 import { SearchAndFilters } from './components/search-and-filters';
@@ -39,11 +39,9 @@ const App = ({ loaderData }: Route.ComponentProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('updated');
   const [statusFilter, setStatusFilter] = useState('all');
-  const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
-
   const handleDeleteConfirmation = async (
     event: React.FormEvent<HTMLFormElement>,
-    logId: string,
+    _logId: string,
     logTitle: string,
   ) => {
     event.preventDefault();
@@ -124,6 +122,7 @@ const App = ({ loaderData }: Route.ComponentProps) => {
         />
       </div>
 
+      <FloatingAddButton />
     </div>
   );
 };
