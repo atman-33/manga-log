@@ -13,7 +13,7 @@
     "postinstall": "npm run cf-typegen",
     "preview": "npm run build && vite preview",
     "typecheck": "npm run cf-typegen && react-router typegen && tsc -b",
-    "check": "npm run typecheck && npm run biome:check",
+    "check": "npx env-cmd -f .env.example npm run typecheck && npm run biome:check",
     "biome:check": "biome check --fix && biome format --write",
     "test": "vitest",
     "prepare": "husky",
