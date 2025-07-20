@@ -53,12 +53,13 @@ export function MangaCard({ log, onDelete }: MangaCardProps) {
             </h3>
           </Link>
 
-          <div className="flex items-center gap-2 ml-4">
+          <div className="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-4">
             <Link to={`/manga/${log.id}/edit`}>
               <Button
                 variant="ghost"
                 size="icon"
-                className="opacity-0 group-hover:opacity-100 transition-opacity hover:bg-purple-100 dark:hover:bg-purple-900/20"
+                className="sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hover:bg-purple-100 dark:hover:bg-purple-900/20 h-8 w-8 sm:h-10 sm:w-10"
+                title="Edit manga"
               >
                 <Edit3 className="w-4 h-4" />
               </Button>
@@ -75,7 +76,8 @@ export function MangaCard({ log, onDelete }: MangaCardProps) {
                 variant="ghost"
                 size="icon"
                 type="submit"
-                className="opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-100 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400"
+                className="sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hover:bg-red-100 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 h-8 w-8 sm:h-10 sm:w-10"
+                title="Delete manga"
               >
                 <Trash2 className="w-4 h-4" />
               </Button>
