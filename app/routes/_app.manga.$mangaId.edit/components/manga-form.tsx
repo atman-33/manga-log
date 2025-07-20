@@ -132,7 +132,7 @@ export function MangaForm({ defaultValues }: MangaFormProps) {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
-          <FormHeader isEditing={!!defaultValues} />
+          <FormHeader isEditing={!!defaultValues} onCancel={handleCancel} />
           <StepIndicator currentStep={currentStep} onStepClick={goToStep} />
 
           {/* Manga Info Header - Always visible */}

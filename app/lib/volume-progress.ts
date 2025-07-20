@@ -42,24 +42,34 @@ const VOLUME_STAGES: VolumeStage[] = [
 ];
 
 /**
- * Calculate volume progress information based on current reading progress
+ * Calculate reading progress information based on volume and chapter progress
+ * Converts chapter progress to equivalent volumes (10 chapters = 1 volume)
  */
-export function getVolumeProgress(
+export function getReadingProgress(
   progressVolume: number | null,
+  progressChapter: number | null,
 ): VolumeProgressInfo {
-  if (!progressVolume || progressVolume <= 0) {
+  // Calculate equivalent volumes from chapters (10 chapters = 1 volume)
+  const volumeFromChapters = progressChapter
+    ? Math.floor(progressChapter / 10)
+    : 0;
+
+  // Use the higher value between actual volumes and calculated volumes from chapters
+  const effectiveVolumes = Math.max(progressVolume || 0, volumeFromChapters);
+
+  if (effectiveVolumes <= 0 && !progressChapter) {
     return {
       percentage: 0,
       label: 'Not Started',
       color: 'bg-gray-300',
-      volumeText: '0 volumes',
+      volumeText: 'Not started',
       stage: 'none',
     };
   }
 
   // Find the appropriate stage for this volume count
   const currentStage =
-    VOLUME_STAGES.find((stage) => progressVolume <= stage.max) ||
+    VOLUME_STAGES.find((stage) => effectiveVolumes <= stage.max) ||
     VOLUME_STAGES[VOLUME_STAGES.length - 1];
   const currentStageIndex = VOLUME_STAGES.indexOf(currentStage);
   const prevStageMax =
@@ -72,17 +82,22 @@ export function getVolumeProgress(
     percentage = 100;
   } else {
     const stageRange = currentStage.max - prevStageMax;
-    const progressInStage = progressVolume - prevStageMax;
+    const progressInStage = effectiveVolumes - prevStageMax;
     percentage = Math.min((progressInStage / stageRange) * 100, 100);
   }
 
-  // Format volume text
-  const volumeText =
-    progressVolume === 1
-      ? '1 volume'
-      : progressVolume > 50
-        ? `${progressVolume} volumes (50+)`
-        : `${progressVolume} volumes`;
+  // Format progress text based on what data is available
+  let volumeText: string;
+  if (progressVolume && progressChapter) {
+    volumeText = `Vol. ${progressVolume}, Ch. ${progressChapter}`;
+  } else if (progressVolume) {
+    volumeText =
+      progressVolume === 1 ? '1 volume' : `${progressVolume} volumes`;
+  } else if (progressChapter) {
+    volumeText = `Chapter ${progressChapter}`;
+  } else {
+    volumeText = 'Not started';
+  }
 
   return {
     percentage,
@@ -94,19 +109,38 @@ export function getVolumeProgress(
 }
 
 /**
- * Get reading achievement based on volume count
+ * Calculate volume progress information based on current reading progress
+ * @deprecated Use getReadingProgress instead for better chapter support
  */
-export function getReadingAchievement(progressVolume: number | null): {
+export function getVolumeProgress(
+  progressVolume: number | null,
+): VolumeProgressInfo {
+  return getReadingProgress(progressVolume, null);
+}
+
+/**
+ * Get reading achievement based on volume and chapter progress
+ */
+export function getReadingAchievement(
+  progressVolume: number | null,
+  progressChapter: number | null,
+): {
   text: string;
   emoji: string;
 } {
-  if (!progressVolume || progressVolume <= 0) {
+  // Calculate equivalent volumes from chapters (10 chapters = 1 volume)
+  const volumeFromChapters = progressChapter
+    ? Math.floor(progressChapter / 10)
+    : 0;
+  const effectiveVolumes = Math.max(progressVolume || 0, volumeFromChapters);
+
+  if (effectiveVolumes <= 0 && !progressChapter) {
     return { text: 'Start Reading', emoji: '📖' };
   }
 
   const achievementEmojis = ['✨', '📚', '🎓', '👑', '🏆'];
   const currentStage =
-    VOLUME_STAGES.find((stage) => progressVolume <= stage.max) ||
+    VOLUME_STAGES.find((stage) => effectiveVolumes <= stage.max) ||
     VOLUME_STAGES[VOLUME_STAGES.length - 1];
   const stageIndex = VOLUME_STAGES.indexOf(currentStage);
 
