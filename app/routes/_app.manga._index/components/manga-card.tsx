@@ -6,7 +6,7 @@ import { Button } from '~/components/ui/button';
 import { Progress } from '~/components/ui/progress';
 import { StarRating } from '~/components/star-rating';
 import type { mangaLogs } from '~/database/schema';
-import { getVolumeProgress, getReadingAchievement } from '~/lib/volume-progress';
+import { getReadingProgress, getReadingAchievement } from '~/lib/volume-progress';
 
 interface MangaCardProps {
   log: InferSelectModel<typeof mangaLogs>;
@@ -14,8 +14,8 @@ interface MangaCardProps {
 }
 
 export function MangaCard({ log, onDelete }: MangaCardProps) {
-  const volumeProgress = getVolumeProgress(log.volume_progress);
-  const achievement = getReadingAchievement(log.volume_progress);
+  const readingProgress = getReadingProgress(log.volume_progress, log.chapter_progress);
+  const achievement = getReadingAchievement(log.volume_progress, log.chapter_progress);
 
   return (
     <div className="group relative bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 hover:border-purple-300 dark:hover:border-purple-600 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10 hover:-translate-y-1 overflow-hidden">
@@ -103,10 +103,15 @@ export function MangaCard({ log, onDelete }: MangaCardProps) {
         <div className="space-y-3 mb-4">
           <div className="space-y-2">
             <div className="flex justify-between items-center text-sm">
-              <span className="text-gray-600 dark:text-gray-400">{volumeProgress.volumeText}</span>
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                <span className="text-gray-900 dark:text-white font-medium">
+                  {readingProgress.volumeText}
+                </span>
+              </div>
               <div className="flex items-center gap-1">
                 <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {volumeProgress.label}
+                  {readingProgress.label}
                 </span>
                 <span className="text-xs">{achievement.emoji}</span>
               </div>
@@ -114,17 +119,10 @@ export function MangaCard({ log, onDelete }: MangaCardProps) {
 
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
               <div
-                className={`h-2 rounded-full transition-all duration-300 ${volumeProgress.color}`}
-                style={{ width: `${volumeProgress.percentage}%` }}
+                className={`h-2 rounded-full transition-all duration-300 ${readingProgress.color}`}
+                style={{ width: `${readingProgress.percentage}%` }}
               />
             </div>
-          </div>
-
-          <div className="text-sm text-gray-600 dark:text-gray-400">
-            <span className="flex items-center gap-1">
-              <BookOpen className="w-3 h-3" />
-              Chapter {log.chapter_progress}
-            </span>
           </div>
         </div>
 
