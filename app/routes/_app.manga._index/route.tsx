@@ -133,6 +133,7 @@ const App = ({ loaderData }: Route.ComponentProps) => {
           setSortBy={setSortBy}
           statusFilter={statusFilter}
           setStatusFilter={setStatusFilter}
+          viewType={currentViewType}
         />
 
         {currentViewType === 'card' ? (

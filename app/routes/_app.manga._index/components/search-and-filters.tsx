@@ -17,6 +17,7 @@ interface SearchAndFiltersProps {
   setSortBy: (sort: string) => void;
   statusFilter: string;
   setStatusFilter: (filter: string) => void;
+  viewType: 'card' | 'list';
 }
 
 export function SearchAndFilters({
@@ -26,8 +27,9 @@ export function SearchAndFilters({
   setSortBy,
   statusFilter,
   setStatusFilter,
+  viewType,
 }: SearchAndFiltersProps) {
-  const { viewType, setViewType } = useUIStore();
+  const { setViewType } = useUIStore();
   return (
     <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-6 border border-gray-200/50 dark:border-gray-700/50 mb-8">
       <div className="flex flex-col lg:flex-row gap-4 items-center">
