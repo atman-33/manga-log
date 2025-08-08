@@ -1,5 +1,5 @@
 import type { InferSelectModel } from 'drizzle-orm';
-import { BookOpen, Edit3, Trash2 } from 'lucide-react';
+import { BookOpen, Edit3, LeafyGreen, Trash2 } from 'lucide-react';
 import { Form, Link } from 'react-router';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
@@ -92,11 +92,9 @@ export function MangaListItem({ log, onDelete }: MangaListItemProps) {
             {log.is_completed ? "Complete" : "Reading"}
           </Badge>
           <StarRating rating={log.score} size="sm" showValue={false} />
-          {log.score && (
-            <span className="text-sm text-gray-600 dark:text-gray-400">
-              {log.score.toFixed(1)}
-            </span>
-          )}
+          <span className="text-sm text-gray-600 dark:text-gray-400">
+            {log.score !== null ? log.score.toFixed(1) : '0.0'}
+          </span>
         </div>
         <div className="text-right">
           <div className="text-sm font-medium text-gray-900 dark:text-white">
@@ -121,11 +119,9 @@ export function MangaListItem({ log, onDelete }: MangaListItemProps) {
       {/* Desktop: Score */}
       <div className="hidden sm:flex col-span-2 items-center justify-center">
         <StarRating rating={log.score} size="sm" showValue={false} />
-        {log.score && (
-          <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
-            {log.score.toFixed(1)}
-          </span>
-        )}
+        <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
+          {log.score !== null ? log.score.toFixed(1) : '0.0'}
+        </span>
       </div>
 
       {/* Desktop: Progress */}

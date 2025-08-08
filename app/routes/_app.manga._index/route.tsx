@@ -1,7 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AlertDialog } from '~/components/react-call/alert-dialog';
 import { getAuth } from '~/lib/auth/auth.server';
+import { getViewTypeCookie } from '~/lib/cookies';
 import { generateMeta } from '~/lib/meta';
+import { useUIStore } from '~/stores/ui-store';
 import type { Route } from './+types/route';
 import { FloatingAddButton } from './components/floating-add-button';
 import { MangaGrid } from './components/manga-grid';
@@ -24,7 +26,7 @@ export const loader = async ({ context, request }: Route.LoaderArgs) => {
   const user = session?.user;
 
   if (!user) {
-    return { mangaLogs: [] };
+    return { mangaLogs: [], viewType: getViewTypeCookie(request) };
   }
 
   const mangaLogs = await context.db.query.mangaLogs.findMany({
@@ -32,15 +34,24 @@ export const loader = async ({ context, request }: Route.LoaderArgs) => {
     orderBy: (mangaLogs, { desc }) => [desc(mangaLogs.updated_at)],
   });
 
-  return { mangaLogs };
+  const viewType = getViewTypeCookie(request);
+
+  return { mangaLogs, viewType };
 };
 
 const App = ({ loaderData }: Route.ComponentProps) => {
-  const { mangaLogs } = loaderData;
+  const { mangaLogs, viewType: initialViewType } = loaderData;
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('updated');
   const [statusFilter, setStatusFilter] = useState('all');
-  const [viewType, setViewType] = useState<'card' | 'list'>('card');
+
+  // Use Zustand store for viewType
+  const { viewType, setViewType, initializeViewType } = useUIStore();
+
+  // Initialize viewType from server-side cookie
+  useEffect(() => {
+    initializeViewType(initialViewType);
+  }, [initialViewType, initializeViewType]);
   const handleDeleteConfirmation = async (
     event: React.FormEvent<HTMLFormElement>,
     _logId: string,
@@ -115,8 +126,6 @@ const App = ({ loaderData }: Route.ComponentProps) => {
           setSortBy={setSortBy}
           statusFilter={statusFilter}
           setStatusFilter={setStatusFilter}
-          viewType={viewType}
-          setViewType={setViewType}
         />
 
         {viewType === 'card' ? (
