@@ -5,6 +5,7 @@ import { generateMeta } from '~/lib/meta';
 import type { Route } from './+types/route';
 import { FloatingAddButton } from './components/floating-add-button';
 import { MangaGrid } from './components/manga-grid';
+import { MangaList } from './components/manga-list';
 import { PageHeader } from './components/page-header';
 import { SearchAndFilters } from './components/search-and-filters';
 import { StatsCards } from './components/stats-cards';
@@ -39,6 +40,7 @@ const App = ({ loaderData }: Route.ComponentProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('updated');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [viewType, setViewType] = useState<'card' | 'list'>('card');
   const handleDeleteConfirmation = async (
     event: React.FormEvent<HTMLFormElement>,
     _logId: string,
@@ -113,13 +115,25 @@ const App = ({ loaderData }: Route.ComponentProps) => {
           setSortBy={setSortBy}
           statusFilter={statusFilter}
           setStatusFilter={setStatusFilter}
+          viewType={viewType}
+          setViewType={setViewType}
         />
-        <MangaGrid
-          mangaLogs={filteredMangaLogs}
-          searchTerm={searchTerm}
-          statusFilter={statusFilter}
-          onDelete={handleDeleteConfirmation}
-        />
+
+        {viewType === 'card' ? (
+          <MangaGrid
+            mangaLogs={filteredMangaLogs}
+            searchTerm={searchTerm}
+            statusFilter={statusFilter}
+            onDelete={handleDeleteConfirmation}
+          />
+        ) : (
+          <MangaList
+            mangaLogs={filteredMangaLogs}
+            searchTerm={searchTerm}
+            statusFilter={statusFilter}
+            onDelete={handleDeleteConfirmation}
+          />
+        )}
       </div>
 
       <FloatingAddButton />
