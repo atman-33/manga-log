@@ -44,14 +44,21 @@ const App = ({ loaderData }: Route.ComponentProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('updated');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [isHydrated, setIsHydrated] = useState(false);
 
   // Use Zustand store for viewType
   const { viewType, setViewType, initializeViewType } = useUIStore();
 
-  // Initialize viewType from server-side cookie
+  // Handle hydration and viewType initialization
   useEffect(() => {
+    // Initialize viewType from server-side cookie
     initializeViewType(initialViewType);
+    // Mark as hydrated after initialization
+    setIsHydrated(true);
   }, [initialViewType, initializeViewType]);
+
+  // Use server-side viewType until hydration is complete
+  const currentViewType = isHydrated ? viewType : initialViewType;
   const handleDeleteConfirmation = async (
     event: React.FormEvent<HTMLFormElement>,
     _logId: string,
@@ -128,7 +135,7 @@ const App = ({ loaderData }: Route.ComponentProps) => {
           setStatusFilter={setStatusFilter}
         />
 
-        {viewType === 'card' ? (
+        {currentViewType === 'card' ? (
           <MangaGrid
             mangaLogs={filteredMangaLogs}
             searchTerm={searchTerm}
